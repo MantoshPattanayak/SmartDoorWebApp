@@ -5,7 +5,7 @@ from datetime import datetime
 import ping3
 import logging
 
-logging.basicConfig(filename="C:\\Users\\Sivashreet\\server.log",format='%(asctime)s %(message)s',filemode='a')
+logging.basicConfig(filename="/home/azureiotuser/server.log",format='%(asctime)s %(message)s',filemode='a')
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
