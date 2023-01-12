@@ -23,6 +23,11 @@ logger.info("Connected to MQTT")
 
 connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 while True:
+	client = mqtt.Client()
+	client.on_connect = on_connect
+	client.on_message = on_message
+	client.connect("20.205.208.135", 1883, 60)
+	time.sleep(4)
 	with connection.cursor() as cursor:
 		sql = "Select keonjhar_school_device.device_id,keonjhar_school_device.school_id,keonjhar_school.school_name from keonjhar_school_device join keonjhar_school on keonjhar_school_device.school_id = keonjhar_school.school_id where device_status = 1 and device_reset_status=0"
 		cursor.execute(sql)
