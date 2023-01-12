@@ -43,8 +43,10 @@ while True:
 			for i in range(0,len(result)):
 				print(result)
 				topic_topic = str(device_id)+"/"+str(school_id)+"/"+str(school_name)+"/"+"Reset_POST"
+				print(topic_topic)
 				client.publish(topic_topic,"reset_0")
 				topic2 = str(device_id)+"/"+str(school_id)+"/"+str(school_name)+ "/" + "Set_Alert"
+				print(topic2)
 				client.publish(topic2,"theft/alarm_off")
 				print("Reset Send")
 				with connection.cursor() as cursor:
