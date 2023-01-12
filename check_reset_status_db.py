@@ -35,14 +35,14 @@ while True:
 			logger.info("No data found from request")
 		else:
 			logger.info("Data Found, intiating reset request")
+			print(result)
+			device_id = result[0]["device_id"]
+			school_id = result[0]["school_id"]
+			school_name = result[0]["school_name"]
 			for i in range(0,len(result)):
 				print(result)
-				count = 0;
-				device_id = result[0]["device_id"]
-				school_id = result[0]["school_id"]
-				school_name = result[0]["school_name"]
 				topic_topic = str(device_id)+"/"+str(school_id)+"/"+school_name+"/"+"Reset_POST"
-				client.publish(topic_topic,"reset_0")
+				client.publish(topic_topic,"reset_0",qos=1)
 				topic2 = str(device_id)+"/"+str(school_id)+"/"+school_name+ "/" + "Set_Alert"
 				client.publish(topic2,"theft/alarm_off")
 				print("Reset Send")
