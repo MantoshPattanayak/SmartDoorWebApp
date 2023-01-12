@@ -47,8 +47,8 @@ while True:
 				client.publish(topic2,"theft/alarm_off")
 				print("Reset Send")
 				with connection.cursor() as cursor:
-					sql = "update keonjhar_school_device set device_status = 0, device_reset_status =0 where device_id=%s;"
-					cursor.execute(sql,(device_id))
+					sql = "update keonjhar_school_device set device_status = 0, device_reset_status =0 where device_id=%s and school_id = %s;"
+					cursor.execute(sql,(device_id,school_id))
 					result = cursor.fetchall()
 					connection.commit()
 					print("Device has been reset {}".format(device_id))
