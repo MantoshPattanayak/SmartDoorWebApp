@@ -42,7 +42,7 @@ while True:
 			for i in range(0,len(result)):
 				print(result)
 				topic_topic = str(device_id)+"/"+str(school_id)+"/"+school_name+"/"+"Reset_POST"
-				client.publish(topic_topic,"reset_0",qos=1)
+				client.publish(topic_topic,"reset_0")
 				topic2 = str(device_id)+"/"+str(school_id)+"/"+school_name+ "/" + "Set_Alert"
 				client.publish(topic2,"theft/alarm_off")
 				print("Reset Send")
