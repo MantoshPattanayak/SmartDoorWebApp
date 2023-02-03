@@ -2,6 +2,7 @@ import time
 import paho.mqtt.client as mqtt
 import pymysql.cursors
 from datetime import datetime
+from datetime import date
 import ping3
 import logging
 
@@ -103,6 +104,7 @@ def regular_data_ping(filtered_data,topic_data):
 				#topic_data = topic_data+"/Ping_POST"
 				#client.publish(topic_data,"theft/alarm_on")
 def device_status(filtered_data,topic_data):
+	today = date.today()
 	now = datetime.now()
 	current_time = time.strftime("%H:%M:%S")
 	current_date = today.strftime("%d/%m/%Y")
