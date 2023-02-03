@@ -5,7 +5,7 @@ from datetime import datetime
 from datetime import date
 import ping3
 import logging
-
+import pytz
 logging.basicConfig(filename="/home/azureiotuser/server.log",format='%(asctime)s %(message)s',filemode='a')
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -104,9 +104,11 @@ def regular_data_ping(filtered_data,topic_data):
 				#topic_data = topic_data+"/Ping_POST"
 				#client.publish(topic_data,"theft/alarm_on")
 def device_status(filtered_data,topic_data):
+	UTC = pytz.utc
+	IST = pytz.timezone('Asia/Kolkata')
 	today = date.today()
-	now = datetime.now()
-	current_time = time.strftime("%H:%M:%S")
+	current_time = datetime.now(IST)
+	current_time =current_time.strftime('%H:%M:%S')
 	current_date = today.strftime("%d/%m/%Y")
 	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 	topic_data = topic_data
@@ -135,7 +137,7 @@ def device_status(filtered_data,topic_data):
 			result = cursor.fetchall()
 			connection.commit()
 			print("Door is closed: -> device_id {} & school_id {}".format(device_id,school_id))
-	elif data == "Forced_Entry":
+	elif data == "Forced Entry":
 		with connection.cursor() as cursor:
 			sql ="update keonjhar_school_device set connection_status = 'Forced_Entry' where device_id = %s and school_id = %s"
 			sql2 ="update keonjhar_school_device set status_date = %s where device_id = %s and school_id = %s"
@@ -148,7 +150,7 @@ def device_status(filtered_data,topic_data):
 			result = cursor.fetchall()
 			connection.commit()
 			print("Forced_Entry has been set off for device_id {} & school_id {}".format(device_id,school_id))
-	elif data == "Open_from_Inside":
+	elif data == "Open from Inside":
 		with connection.cursor() as cursor:
 			sql ="update keonjhar_school_device set connection_status = 'Open_from_Inside' where device_id = %s and school_id = %s"
 			sql2 ="update keonjhar_school_device set status_date = %s where device_id = %s and school_id = %s"
