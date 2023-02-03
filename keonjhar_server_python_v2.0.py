@@ -147,7 +147,7 @@ def device_status(filtered_data,topic_data):
 			cursor.execute(sql3,(current_time,device_id,school_id))
 			topic_alarm = topic_data+"Set_Alert"
 			client.publish(topic_alarm,"theft/alarm_on")
-			print(topic_data)
+			print(topic_alarm)
 			result = cursor.fetchall()
 			connection.commit()
 			print("Forced_Entry has been set off for device_id {} & school_id {}".format(device_id,school_id))
