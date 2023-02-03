@@ -102,6 +102,49 @@ def regular_data_ping(filtered_data,topic_data):
 					print("Reset status has occured for device id {}".format(device_id))
 				#topic_data = topic_data+"/Ping_POST"
 				#client.publish(topic_data,"theft/alarm_on")
+def device_status(filtered_data,topic_data):
+	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
+	topic_data = topic_data
+	device_id = filtered_data[0]
+	school_id = filtered_data[1]
+	data = filtered_data[3]
+	if data == "Open":
+		with connection.cursor() as cursor:
+			sql ="update keonjhar_school_device set connection_status = 'Open' where device_id = %s and school_id = %s"
+			#topic_alarm = topic_data+"Set_Alert"
+			#client.publish(topic_alarm,"theft/alarm_on")
+			cursor.execute(sql,(device_id,school_id))
+			result = cursor.fetchall()
+			connection.commit()
+			print("Door is Open: -> for device_id {} & school_id {}".format(device_id,school_id))
+	elif data == "Closed":
+		with connection.cursor() as cursor:
+			sql ="update keonjhar_school_device set connection_status = 'Closed' where device_id = %s and school_id = %s"
+			#topic_alarm = topic_data+"Set_Alert"
+			#client.publish(topic_alarm,"theft/alarm_on")
+			cursor.execute(sql,(device_id,school_id))
+			result = cursor.fetchall()
+			connection.commit()
+			print("Door is closed: -> device_id {} & school_id {}".format(device_id,school_id))
+	elif data = "Forced_Entry":
+		with connection.cursor() as cursor:
+			sql ="update keonjhar_school_device set connection_status = 'Forced_Entry' where device_id = %s and school_id = %s"
+			topic_alarm = topic_data+"Set_Alert"
+			client.publish(topic_alarm,"theft/alarm_on")
+			cursor.execute(sql,(device_id,school_id))
+			result = cursor.fetchall()
+			connection.commit()
+			print("Forced_Entry has been set off for device_id {} & school_id {}".format(device_id,school_id))
+	elif data = "Open_from_Inside":
+		with connection.cursor() as cursor:
+			sql ="update keonjhar_school_device set connection_status = 'Open_from_Inside' where device_id = %s and school_id = %s"
+			#topic_alarm = topic_data+"Set_Alert"
+			#client.publish(topic_alarm,"theft/alarm_on")
+			cursor.execute(sql,(device_id,school_id))
+			result = cursor.fetchall()
+			connection.commit()
+			print("Door is open: -> device_id {} & school_id {}".format(device_id,school_id))
+
 def sensor_validation(filtered_data,topic_data):
 	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 	topic_data = topic_data
@@ -135,6 +178,8 @@ def on_message(client, userdata, msg):
 		sensor_validation(filtered_data,topic_data)
 	elif filtered_data[4] == "ping":
 		regular_data_ping(filtered_data,topic_data)
+	elif filtered_data[4] == "doorStat":
+		device_status(filtered_data,topic_data)
 	else:
 		print("incorrect data arrived")
 		logger.warning("Incorrect Data has Arrived")
