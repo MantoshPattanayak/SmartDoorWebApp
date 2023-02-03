@@ -103,6 +103,9 @@ def regular_data_ping(filtered_data,topic_data):
 				#topic_data = topic_data+"/Ping_POST"
 				#client.publish(topic_data,"theft/alarm_on")
 def device_status(filtered_data,topic_data):
+	now = datetime.now()
+	current_time = time.strftime("%H:%M:%S", t)
+	current_date = = today.strftime("%d/%m/%Y")
 	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 	topic_data = topic_data
 	device_id = filtered_data[0]
@@ -111,39 +114,51 @@ def device_status(filtered_data,topic_data):
 	if data == "Open":
 		with connection.cursor() as cursor:
 			sql ="update keonjhar_school_device set connection_status = 'Open' where device_id = %s and school_id = %s"
-			#topic_alarm = topic_data+"Set_Alert"
-			#client.publish(topic_alarm,"theft/alarm_on")
+			sql2 ="update keonjhar_school_device set status_date = %s where device_id = %s and school_id = %s"
+			sql3 ="update keonjhar_school_device set status_time = %s where device_id = %s and school_id = %s"
 			cursor.execute(sql,(device_id,school_id))
+			cursor.execute(sql2,(current_date,device_id,school_id))
+			cursor.execute(sql3,(current_time,device_id,school_id))
 			result = cursor.fetchall()
 			connection.commit()
 			print("Door is Open: -> for device_id {} & school_id {}".format(device_id,school_id))
 	elif data == "Closed":
 		with connection.cursor() as cursor:
 			sql ="update keonjhar_school_device set connection_status = 'Closed' where device_id = %s and school_id = %s"
-			#topic_alarm = topic_data+"Set_Alert"
-			#client.publish(topic_alarm,"theft/alarm_on")
+			sql2 ="update keonjhar_school_device set status_date = %s where device_id = %s and school_id = %s"
+			sql3 ="update keonjhar_school_device set status_time = %s where device_id = %s and school_id = %s"
 			cursor.execute(sql,(device_id,school_id))
+			cursor.execute(sql2,(current_date,device_id,school_id))
+			cursor.execute(sql3,(current_time,device_id,school_id))
 			result = cursor.fetchall()
 			connection.commit()
 			print("Door is closed: -> device_id {} & school_id {}".format(device_id,school_id))
 	elif data = "Forced_Entry":
 		with connection.cursor() as cursor:
 			sql ="update keonjhar_school_device set connection_status = 'Forced_Entry' where device_id = %s and school_id = %s"
+			sql2 ="update keonjhar_school_device set status_date = %s where device_id = %s and school_id = %s"
+			sql3 ="update keonjhar_school_device set status_time = %s where device_id = %s and school_id = %s"
+			cursor.execute(sql,(device_id,school_id))
+			cursor.execute(sql2,(current_date,device_id,school_id))
+			cursor.execute(sql3,(current_time,device_id,school_id))
 			topic_alarm = topic_data+"Set_Alert"
 			client.publish(topic_alarm,"theft/alarm_on")
-			cursor.execute(sql,(device_id,school_id))
 			result = cursor.fetchall()
 			connection.commit()
 			print("Forced_Entry has been set off for device_id {} & school_id {}".format(device_id,school_id))
 	elif data = "Open_from_Inside":
 		with connection.cursor() as cursor:
 			sql ="update keonjhar_school_device set connection_status = 'Open_from_Inside' where device_id = %s and school_id = %s"
-			#topic_alarm = topic_data+"Set_Alert"
-			#client.publish(topic_alarm,"theft/alarm_on")
+			sql2 ="update keonjhar_school_device set status_date = %s where device_id = %s and school_id = %s"
+			sql3 ="update keonjhar_school_device set status_time = %s where device_id = %s and school_id = %s"
 			cursor.execute(sql,(device_id,school_id))
+			cursor.execute(sql2,(current_date,device_id,school_id))
+			cursor.execute(sql3,(current_time,device_id,school_id))
 			result = cursor.fetchall()
 			connection.commit()
 			print("Door is open: -> device_id {} & school_id {}".format(device_id,school_id))
+	else:
+		print("Wrong Data")
 
 def sensor_validation(filtered_data,topic_data):
 	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
