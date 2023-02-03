@@ -133,7 +133,7 @@ def device_status(filtered_data,topic_data):
 			result = cursor.fetchall()
 			connection.commit()
 			print("Door is closed: -> device_id {} & school_id {}".format(device_id,school_id))
-	elif data = "Forced_Entry":
+	elif data == "Forced_Entry":
 		with connection.cursor() as cursor:
 			sql ="update keonjhar_school_device set connection_status = 'Forced_Entry' where device_id = %s and school_id = %s"
 			sql2 ="update keonjhar_school_device set status_date = %s where device_id = %s and school_id = %s"
@@ -146,7 +146,7 @@ def device_status(filtered_data,topic_data):
 			result = cursor.fetchall()
 			connection.commit()
 			print("Forced_Entry has been set off for device_id {} & school_id {}".format(device_id,school_id))
-	elif data = "Open_from_Inside":
+	elif data == "Open_from_Inside":
 		with connection.cursor() as cursor:
 			sql ="update keonjhar_school_device set connection_status = 'Open_from_Inside' where device_id = %s and school_id = %s"
 			sql2 ="update keonjhar_school_device set status_date = %s where device_id = %s and school_id = %s"
