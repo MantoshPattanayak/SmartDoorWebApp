@@ -104,7 +104,7 @@ def regular_data_ping(filtered_data,topic_data):
 				#client.publish(topic_data,"theft/alarm_on")
 def device_status(filtered_data,topic_data):
 	now = datetime.now()
-	current_time = time.strftime("%H:%M:%S", t)
+	current_time = time.strftime("%H:%M:%S")
 	current_date = today.strftime("%d/%m/%Y")
 	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 	topic_data = topic_data
