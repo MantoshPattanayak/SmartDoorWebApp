@@ -7,9 +7,6 @@ import logging
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
-
-    # Subscribing in on_connect() means that if we lose the connection and
-    # reconnect then subscriptions will be renewed.
     client.subscribe("$SYS/#")
 
 def on_message(client, userdata, msg):
@@ -30,8 +27,6 @@ with connection.cursor() as cursor:
 	result = cursor.fetchall()
 	connection.commit()
 	print("Second data")
-	#print(result[0]["school_id"])
-	#print(result[1]["school_id"])
 	for i in range(0,len(result)):
 		data = result[i]["school_id"]
 		print(data)
