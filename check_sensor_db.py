@@ -26,20 +26,5 @@ with connection.cursor() as cursor:
 	cursor.execute(sql)
 	result = cursor.fetchall()
 	connection.commit()
-	print("Second data")
-	for i in range(0,len(result)):
-		data = result[i]["school_id"]
-		print(data)
-		with connection.cursor() as cursor:
-			data
-			sql ="Select keonjhar_school_device.device_id, keonjhar_school.school_name from keonjhar_school_device join keonjhar_school on keonjhar_school_device.school_id = keonjhar_school.school_id where keonjhar_school_device.school_id=%s;"
-			cursor.execute(sql,(data))
-			result=cursor.fetchall()
-			connection.commit()
-			print(result)
-			school_id = result[0]["school_id"]
-			device_id = result[0]["device_id"]
-			school_name = result[0]["school_name"]
-			topic = str(device_id)+"/"+str(school_id)+"/"+str(school_name)
-			client.publish(topic,"on")
+	
 client.loop_forever()

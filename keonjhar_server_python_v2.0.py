@@ -166,6 +166,12 @@ def device_status(filtered_data,topic_data):
 		print("Wrong Data")
 
 def sensor_validation(filtered_data,topic_data):
+	UTC = pytz.utc
+	IST = pytz.timezone('Asia/Kolkata')
+	today = date.today()
+	current_time = datetime.now(IST)
+	current_time =current_time.strftime('%H:%M:%S')
+	current_date = today.strftime("%d/%m/%Y")
 	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 	topic_data = topic_data
 	data = filtered_data[3].split("@")
@@ -180,7 +186,9 @@ def sensor_validation(filtered_data,topic_data):
 	school_id = filtered_data[1]
 	with connection.cursor() as cursor:
 		sql = "update keonjhar_school_device set device_id=%s,device_temp=%s,device_hum=%s,device_mq2=%s,school_id=%s where device_id=%s"
+		sql2 = "Insert into sensor_data_keonjhar('device_id','school_id','device_smoke_data','device_temperature','device_humidity',received_date,recevied_time) values(%s,%s,%s,%s,%s,%s,%s)"
 		cursor.execute(sql,(int(device_id),float(temp),float(hum),float(mq2),int(school_id),int(device_id)))
+		cursor.execute(sql2,(int(device_id),int(school_id),float(mq2),float(temp),float(hum),str(current_date),str(current_time)))
 		result = cursor.fetchall()
 		connection.commit()
 		print("Done sensor upload")
