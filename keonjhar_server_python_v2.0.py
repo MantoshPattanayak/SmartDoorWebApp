@@ -171,7 +171,7 @@ def door_info(filtered_data,topic_data):
 	mac = data[1]
 	device_id = filtered_data[0]
 	school_id = filtered_data[1]
-	print(ip,mac,device_id,school_id)
+	#print(ip,mac,device_id,school_id)
 	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 	with connection.cursor() as cursor:
 		sql = "update keonjhar_school_device set device_ip=%s,device_mac=%s where device_id=%s and school_id=%s"
