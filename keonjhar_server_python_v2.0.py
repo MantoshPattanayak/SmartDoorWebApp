@@ -33,6 +33,12 @@ def on_connect(client, userdata, flags, rc):
 			print("")
 			logger.warning("Unable to subcribe to school topic")
 def door_validation(filtered_data,topic_data):
+	UTC = pytz.utc
+	IST = pytz.timezone('Asia/Kolkata')
+	today = date.today()
+	current_time = datetime.now(IST)
+	current_time =current_time.strftime('%H:%M:%S')
+	current_date = today.strftime("%d/%m/%Y")
 	logger.info("Door Data Arrived")
 	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 	logger.info("Door_Sensor Data arrived")
@@ -57,6 +63,9 @@ def door_validation(filtered_data,topic_data):
 			logger.warning("Wrong username and password")
 			topic_data = topic_data+"/POST"
 			client.publish(topic_data,"incorrect")
+			with connection.cursor() as cursor:
+				sql = "Insert into log(log_type,log_school_id,log_device_id,log_gen_user_id,log_description,log_time,log_date,log_priority) values(%s,%s,%s,%s,%s,%s,%s,%s)"
+				cursor.execute(sql,("DoorLock",int(school_id),int(device_id),int(emp_id),"Door Lock Incorrect",str(current_time),str(current_date),int(str(1))))
 			print(topic_data)
 			#insert into log#######################
 		else:
@@ -71,6 +80,7 @@ def door_validation(filtered_data,topic_data):
 				print("wrong password")
 				#insert into log#######################
 def regular_data_ping(filtered_data,topic_data):
+
 	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 	data = filtered_data[3].split('@')
 	payload = data[0]
