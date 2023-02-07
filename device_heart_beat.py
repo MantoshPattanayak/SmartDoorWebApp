@@ -39,7 +39,7 @@ while True:
 	client.connect("20.205.208.135", 1883, 60)
 	time.sleep(4)
 	with connection.cursor() as cursor:
-		sql = "Select device_id,device_heart_beat_time from keonjhar_school_device"
+		sql = "Select device_id,device_heart_beat_time from keonjhar_school_device where device_heart_beat_time is NOT NULL"
 		cursor.execute(sql)
 		result = cursor.fetchall()
 		connection.commit()
