@@ -52,8 +52,11 @@ while True:
 				cursor.execute(sql,(school_time,current_time))
 				result = cursor.fetchone()
 				print(result)
-				print(result.values())
-				print(type(result))
+				for i,j in result:
+					if int(j) > 1:
+						print("Offline")
+					else:
+						print("online")
 				# if result[''] > 1:
 				# 	print("Device {} offline".format(result[0]['device_id']))
 				# else:
