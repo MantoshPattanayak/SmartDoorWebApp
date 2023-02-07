@@ -62,5 +62,10 @@ while True:
 					result = cursor.fetchall()
 					connection.commit()
 			else:
+				with connection.cursor() as cursor:
+					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
+					cursor.execute(sql11,("device_online",int(school_id),int(device_id),"device Online",str(current_time),str(current_date),"0"))
+					result = cursor.fetchall()
+					connection.commit()
 				print("Online")
 		
