@@ -73,6 +73,12 @@ def door_validation(filtered_data,topic_data):
 			#insert into log#######################
 		else:
 			if int(emp_id) == int(result[0]["emp_id"]) and password== result[0]["user_password"]:
+				with connection.cursor() as cursor:
+					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
+					cursor.execute(sql11,("Door_Entry Granted",int(school_id),int(device_id),"Access Granted",str(current_time),str(current_date),"0"))
+					result = cursor.fetchall()
+					connection.commit()
+					print("Door_Entry Granted",int(school_id),int(device_id),"Access Denised",str(current_time),str(current_date),"0")
 				logger.info("Correct Data entered")
 				topic_data = topic_data+"/POST"
 				client.publish(topic_data,"correct")
@@ -137,6 +143,12 @@ def device_status(filtered_data,topic_data):
 			cursor.execute(sql2,(current_date,device_id,school_id))
 			cursor.execute(sql3,(current_time,device_id,school_id))
 			result = cursor.fetchall()
+			with connection.cursor() as cursor:
+					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
+					cursor.execute(sql11,("Door_Entry Opened",int(school_id),int(device_id),"Door Opened",str(current_time),str(current_date),"0"))
+					result = cursor.fetchall()
+					connection.commit()
+					print("Door_Entry Opened",int(school_id),int(device_id),"Door is opened",str(current_time),str(current_date),"0")
 			connection.commit()
 			print("Door is Open: -> for device_id {} & school_id {}".format(device_id,school_id))
 	elif data == "Closed":
@@ -148,6 +160,12 @@ def device_status(filtered_data,topic_data):
 			cursor.execute(sql2,(current_date,device_id,school_id))
 			cursor.execute(sql3,(current_time,device_id,school_id))
 			result = cursor.fetchall()
+			with connection.cursor() as cursor:
+					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
+					cursor.execute(sql11,("Door_Entry Closed",int(school_id),int(device_id),"Door Closed",str(current_time),str(current_date),"0"))
+					result = cursor.fetchall()
+					connection.commit()
+					print("Door Closed",int(school_id),int(device_id),"Door Closed",str(current_time),str(current_date),"0")
 			connection.commit()
 			print("Door is closed: -> device_id {} & school_id {}".format(device_id,school_id))
 	elif data == "Forced Entry":
@@ -162,6 +180,12 @@ def device_status(filtered_data,topic_data):
 			client.publish(topic_alarm,"theft/alarm_on")
 			print(topic_alarm)
 			result = cursor.fetchall()
+			with connection.cursor() as cursor:
+					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
+					cursor.execute(sql11,("Forced Entry",int(school_id),int(device_id),"Door Break",str(current_time),str(current_date),"0"))
+					result = cursor.fetchall()
+					connection.commit()
+					print("Door Break",int(school_id),int(device_id),"Door Break",str(current_time),str(current_date),"0")
 			connection.commit()
 			print("Forced_Entry has been set off for device_id {} & school_id {}".format(device_id,school_id))
 	elif data == "Open from Inside":
@@ -173,6 +197,12 @@ def device_status(filtered_data,topic_data):
 			cursor.execute(sql2,(current_date,device_id,school_id))
 			cursor.execute(sql3,(current_time,device_id,school_id))
 			result = cursor.fetchall()
+			with connection.cursor() as cursor:
+					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
+					cursor.execute(sql11,("Door Opened",int(school_id),int(device_id),"Door Opened from Inside",str(current_time),str(current_date),"0"))
+					result = cursor.fetchall()
+					connection.commit()
+					print("Door Opened",int(school_id),int(device_id),"Door Opened from Inside",str(current_time),str(current_date),"0")
 			connection.commit()
 			print("Door is open: -> device_id {} & school_id {}".format(device_id,school_id))
 	else:
