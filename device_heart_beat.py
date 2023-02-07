@@ -52,4 +52,8 @@ while True:
 			t2 = datetime.strptime(current_time, "%H:%M:%S")
 			delta = t2-t1
 			print("Time diff {}".format(delta.total_seconds()))
+			if delta.total_seconds() >= 30.0:
+				print("Offline")
+			else:
+				print("Online")
 		
