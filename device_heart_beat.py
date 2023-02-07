@@ -56,7 +56,7 @@ while True:
 					print(j)
 					if j > 1:
 						print("Offline")
-					elif j == None:
+					elif type(j) == None:
 						print("Offline")
 					else:
 						print("online")
