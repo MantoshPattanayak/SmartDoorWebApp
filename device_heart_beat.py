@@ -53,7 +53,10 @@ while True:
 				result = cursor.fetchone()
 				print(result)
 				for i,j in result.items():
+					print(j)
 					if int(j) > 1:
+						print("Offline")
+					elif int(j) == None:
 						print("Offline")
 					else:
 						print("online")
