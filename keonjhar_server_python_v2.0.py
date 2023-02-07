@@ -64,8 +64,8 @@ def door_validation(filtered_data,topic_data):
 			topic_data = topic_data+"/POST"
 			client.publish(topic_data,"incorrect")
 			with connection.cursor() as cursor:
-				sql = "Insert into keonjhar_log(log_type,log_school_id,log_device_id,log_gen_user_id,log_description,log_time,log_date,log_priority) values(%s,%s,%s,%s,%s,%s,%s,%s)"
-				cursor.execute(sql,("DoorLock",int(school_id),int(device_id),int(emp_id),"Door Lock Incorrect",str(current_time),str(current_date),int(str(1))))
+				sql = "Insert into keonjhar_log(log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status)"
+				cursor.execute(sql,("Door_Entry Denied",str(school_id),str(device_id),"Access Denised",current_time,current_date,"0"))
 			print(topic_data)
 			#insert into log#######################
 		else:
