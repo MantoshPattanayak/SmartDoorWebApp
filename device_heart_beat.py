@@ -45,6 +45,8 @@ while True:
 		connection.commit()
 		print(type(result))
 		print(result)
+		device_id = result[0]['device_id']
+		school_id = result[0]['school_id']
 		for i in range(0,len(result)):
 			school_time = result[i]['device_heart_beat_time']
 			print(school_time)
@@ -54,11 +56,11 @@ while True:
 			print("Time diff {}".format(delta.total_seconds()))
 			if delta.total_seconds() >= 30.0:
 				print("Offline")
-				# with connection.cursor() as cursor:
-				# 	sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
-				# 	cursor.execute(sql11,("device_offline",int(school_id),int(device_id),"device Offline",str(current_time),str(current_date),"0"))
-				# 	result = cursor.fetchall()
-				# 	connection.commit()
+				with connection.cursor() as cursor:
+					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
+					cursor.execute(sql11,("device_offline",int(school_id),int(device_id),"device Offline",str(current_time),str(current_date),"0"))
+					result = cursor.fetchall()
+					connection.commit()
 			else:
 				print("Online")
 		
