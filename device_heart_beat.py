@@ -51,7 +51,7 @@ while True:
 				sql = "Select Timestampdiff(minute,%s,%s)"
 				cursor.execute(sql,(school_time,current_time))
 				result = cursor.fetchone()
-				print(result.values.())
+				print(result.values())
 				print(type(result))
 				# if result[''] > 1:
 				# 	print("Device {} offline".format(result[0]['device_id']))
