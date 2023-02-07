@@ -54,7 +54,7 @@ while True:
 				print(result)
 				for i,j in result.items():
 					print(j)
-					if int(j) > 1:
+					if j > 1:
 						print("Offline")
 					elif int(j) == None:
 						print("Offline")
