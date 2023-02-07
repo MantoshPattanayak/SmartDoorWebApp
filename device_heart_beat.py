@@ -52,7 +52,7 @@ while True:
 				cursor.execute(sql,(school_time,current_time))
 				result = cursor.fetchone()
 				print(result)
-				for i,j in result:
+				for i,j in result.items():
 					if int(j) > 1:
 						print("Offline")
 					else:
