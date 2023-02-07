@@ -2,8 +2,10 @@ import time
 import paho.mqtt.client as mqtt
 import pymysql.cursors
 from datetime import datetime
+from datetime import date
 import ping3
 import logging
+import pytz
 
 logging.basicConfig(filename="/home/azureiotuser/server_reset.log",format='%(asctime)s %(message)s',filemode='a')
 logger = logging.getLogger()
