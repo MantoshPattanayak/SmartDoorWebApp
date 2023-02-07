@@ -45,20 +45,10 @@ while True:
 		connection.commit()
 		print(type(result))
 		print(result)
-		with connection.cursor() as cursor:
-			for i in range(0,len(result)):
-				school_time = result[i]['device_heart_beat_time']
-				sql = "Select Timestampdiff(minute,%s,%s)"
-				cursor.execute(sql,(current_time,school_time))
-				result = cursor.fetchone()
-				print(result)
-				for i,j in result.items():
-					print(j)
-					if type(j) == None:
-						print("Online")
-					else:
-						print("Offline")
-				# if result[''] > 1:
-				# 	print("Device {} offline".format(result[0]['device_id']))
-				# else:
-				# 	print("Device {} online".format(result[0]['device_id']))
+		school_time = result[i]['device_heart_beat_time']
+		print(school_time)
+		t1 = datetime.strptime(school_time,"%H:%M:%S")
+		t2 = datetime.strptime(current_time, "%H:%M:%S")
+		delta = t2-t1
+		print("Time diff {}".format(delta.total_seconds()))
+		
