@@ -49,15 +49,15 @@ while True:
 			for i in range(0,len(result)):
 				school_time = result[i]['device_heart_beat_time']
 				sql = "Select Timestampdiff(minute,%s,%s)"
-				cursor.execute(sql,(school_time,current_time))
+				cursor.execute(sql,(current_time,school_time))
 				result = cursor.fetchone()
 				print(result)
 				for i,j in result.items():
 					print(j)
 					if type(j) == None:
-						print("Offline")
+						print("Online")
 					else:
-						print("online")
+						print("Offline")
 				# if result[''] > 1:
 				# 	print("Device {} offline".format(result[0]['device_id']))
 				# else:
