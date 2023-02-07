@@ -224,7 +224,7 @@ def door_info(filtered_data,topic_data):
 	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 	with connection.cursor() as cursor:
 		sql = "update keonjhar_school_device set device_ip=%s,device_mac=%s,device_heart_beat_time=%s,device_heart_beat_date=%s where device_id=%s and school_id=%s"
-		cursor.execute(sql,(ip,mac,str(current_time),str(current_date)device_id,school_id))
+		cursor.execute(sql,(ip,mac,str(current_time),str(current_date),device_id,school_id))
 		result = cursor.fetchall()
 		connection.commit()
 		print("Device Ip {} and Mac {} are update for {}:::{}".format(ip,mac,device_id,school_id))
