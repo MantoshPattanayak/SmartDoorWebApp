@@ -142,6 +142,8 @@ def device_status(filtered_data,topic_data):
 	device_id = filtered_data[0]
 	school_id = filtered_data[1]
 	data = filtered_data[3]
+	school_name = topic_data.split("/")
+	school_name = school_name[2]
 	if data == "Open":
 		with connection.cursor() as cursor:
 			sql ="update keonjhar_school_device set connection_status = 'Open' where device_id = %s and school_id = %s"
@@ -184,10 +186,16 @@ def device_status(filtered_data,topic_data):
 			cursor.execute(sql,(device_id,school_id))
 			cursor.execute(sql2,(current_date,device_id,school_id))
 			cursor.execute(sql3,(current_time,device_id,school_id))
+			result = cursor.fetchall()
+			sql = "select device_id from keonjhar_school_device where school_id=%s and device_type=%s"
+			cursor.execute(sql,(int(school_id),"Alarm"))
+			result4 = cursor.fetchone()
+			device_id=result4['device_id']
+			topic_alarm = str(device_id)+'/'+str(school_id)+'/'+str(school_name)+'/'+"Set_Alert"
 			topic_alarm = topic_data+"/Set_Alert"
 			client.publish(topic_alarm,"theft/alarm_on")
 			print(topic_alarm)
-			result = cursor.fetchall()
+			
 			with connection.cursor() as cursor:
 					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
 					cursor.execute(sql11,("Forced Entry",int(school_id),int(device_id),"Door Break",str(current_time),str(current_date),"0"))

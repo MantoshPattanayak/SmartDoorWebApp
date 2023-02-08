@@ -50,10 +50,16 @@ while True:
 				topic_topic = str(device_id)+"/"+str(school_id)+"/"+str(school_name)+"/"+"Reset_POST"
 				print(topic_topic)
 				client.publish(topic_topic,"reset_0")
-				topic2 = str(device_id)+"/"+str(school_id)+"/"+str(school_name)+ "/" + "Set_Alert"
-				print(topic2)
-				client.publish(topic2,"theft/alarm_off")
-				print("Reset Send")
+				with connection.cursor() as cursor:
+					sql33 = "select device_id,school_name from keonjhar_school_device where school_id=%s and device_type=%s"
+					cursor.execute(sql(int(school_id),"Alarm"))
+					result4 = cursor.fetchone()
+					device_id = result4['device_id']
+					school_name = result4['school_name']
+					topic2 = str(device_id)+"/"+str(school_id)+"/"+str(school_name)+ "/" + "Set_Alert"
+					print(topic2)
+					client.publish(topic2,"theft/alarm_off")
+					print("Reset Send")
 				with connection.cursor() as cursor:
 					sql = "update keonjhar_school_device set device_status = 0, device_reset_status =0 where device_id=%s and school_id = %s;"
 					cursor.execute(sql,(device_id,school_id))
