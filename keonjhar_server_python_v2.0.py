@@ -118,7 +118,7 @@ def regular_data_ping(filtered_data,topic_data):
 					sql = "update keonjhar_school_device set device_reset_status = 1 where device_id=%s"
 					cursor.execute(sql,(device_id))
 					result = cursor.fetchall()
-					sql66 = "select device_id where school_id=%s and device_type=%s"
+					sql66 = "select device_id from keonjhar_school_device where school_id=%s and device_type=%s"
 					cursor.execute(sql66,(int(school_id),"Alarm"))
 					result4 = cursor.fetchone()
 					print(result4)
