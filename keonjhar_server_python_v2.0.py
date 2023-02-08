@@ -123,7 +123,7 @@ def regular_data_ping(filtered_data,topic_data):
 					result4 = cursor.fetchone()
 					print(result4)
 					device_id=result4['device_id']
-					topic_alarm = str(device_id)+'/'+str(school_id)+'/'+str(school_name)+'/'+"/Set_Alert"
+					topic_alarm = str(device_id)+'/'+str(school_id)+'/'+str(school_name)+'/'+"Set_Alert"
 					print(topic_alarm)
 					client.publish(topic_alarm,"theft/alarm_on")
 					connection.commit()
