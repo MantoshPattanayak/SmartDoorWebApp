@@ -47,7 +47,7 @@ while True:
 		print(result)
 		device_id = result[0]['device_id']
 		school_id = result[0]['school_id']
-		for i in range(0,len(result)):
+		for i in range(0,(len(result)-1)):
 			school_time = result[i]['device_heart_beat_time']
 			print(school_time)
 			print(school_time)
