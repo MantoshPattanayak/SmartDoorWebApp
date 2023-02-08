@@ -53,7 +53,6 @@ while True:
 			delta = t2-t1
 			print("Time diff {}".format(delta.total_seconds()))
 			if delta.total_seconds() > 30.0:
-				print("Offline")
 				with connection.cursor() as cursor:
 					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
 					sql33 = "update keonjhar_school_device set device_heartbeat_status = %s where device_id=%s and school_id=%s"
@@ -61,6 +60,7 @@ while True:
 					cursor.execute(sql11,("device_offline",int(school_id),int(device_id),"device Offline",str(current_time),str(current_date),"0"))
 					result = cursor.fetchall()
 					connection.commit()
+					print("Offline")
 			else:
 				with connection.cursor() as cursor:
 					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
