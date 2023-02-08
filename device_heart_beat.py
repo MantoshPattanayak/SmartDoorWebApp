@@ -58,7 +58,7 @@ while True:
 				print("Offline")
 				with connection.cursor() as cursor:
 					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
-					sql33 = "update table keonjhar_school_device set device_heartbeat_status = %s where device_id=%s and school_id=%s"
+					sql33 = "update keonjhar_school_device set device_heartbeat_status = %s where device_id=%s and school_id=%s"
 					cursor.execute(sql22,("Offline",int(device_id),int(school_id)))
 					cursor.execute(sql33,("device_offline",int(school_id),int(device_id),"device Offline",str(current_time),str(current_date),"0"))
 					result = cursor.fetchall()
@@ -66,7 +66,7 @@ while True:
 			else:
 				with connection.cursor() as cursor:
 					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
-					sql22 = "update table keonjhar_school_device set device_heartbeat_status = %s where device_id=%s and school_id=%s"
+					sql22 = "update keonjhar_school_device set device_heartbeat_status = %s where device_id=%s and school_id=%s"
 					cursor.execute(sql22,("Online",int(device_id),int(school_id)))
 					cursor.execute(sql11,("device_online",int(school_id),int(device_id),"device Online",str(current_time),str(current_date),"0"))
 					result = cursor.fetchall()
