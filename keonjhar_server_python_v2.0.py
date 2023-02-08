@@ -95,6 +95,8 @@ def regular_data_ping(filtered_data,topic_data):
 	payload = data[0]
 	school_id = data[2]
 	device_id = data[1]
+	school_name = topic_data.split("/")
+	school_name = school_name[2]
 	with connection.cursor() as cursor:
 		sql = "Select * from keonjhar_school_device where device_id=%s and school_id=%s"
 		cursor.execute(sql,(device_id,school_id))
@@ -114,10 +116,16 @@ def regular_data_ping(filtered_data,topic_data):
 				connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 				with connection.cursor() as cursor:
 					sql = "update keonjhar_school_device set device_reset_status = 1 where device_id=%s"
-					topic_alarm = topic_data+"/Set_Alert"
-					client.publish(topic_alarm,"theft/alarm_on")
 					cursor.execute(sql,(device_id))
 					result = cursor.fetchall()
+					sql66 = "select device_id where school_id=%s and device_type=%s"
+					cursor.execute(sql66,(int(school_id)"Alarm"))
+					result4 = cursor.fetchone()
+					print(result4)
+					device_id result4[0]['device_id']
+					topic_alarm = str(device_id)+'/'+str(school_id)+'/'+str(school_name)+'/'+"/Set_Alert"
+					print(topic_alarm)
+					client.publish(topic_alarm,"theft/alarm_on")
 					connection.commit()
 					print("Reset status has occured for device id {}".format(device_id))
 				#topic_data = topic_data+"/Ping_POST"
