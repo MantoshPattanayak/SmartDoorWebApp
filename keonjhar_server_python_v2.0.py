@@ -119,7 +119,7 @@ def regular_data_ping(filtered_data,topic_data):
 					cursor.execute(sql,(device_id))
 					result = cursor.fetchall()
 					sql66 = "select device_id where school_id=%s and device_type=%s"
-					cursor.execute(sql66,(int(school_id)"Alarm"))
+					cursor.execute(sql66,(int(school_id),"Alarm"))
 					result4 = cursor.fetchone()
 					print(result4)
 					device_id result4[0]['device_id']
