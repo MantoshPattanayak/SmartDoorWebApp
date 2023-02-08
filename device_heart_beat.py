@@ -50,6 +50,7 @@ while True:
 		for i in range(0,len(result)):
 			school_time = result[i]['device_heart_beat_time']
 			print(school_time)
+			print(school_time)
 			t1 = datetime.strptime(school_time,"%H:%M:%S")
 			t2 = datetime.strptime(current_time, "%H:%M:%S")
 			delta = t2-t1
