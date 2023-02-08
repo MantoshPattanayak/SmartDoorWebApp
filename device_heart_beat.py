@@ -44,7 +44,7 @@ while True:
 		result = cursor.fetchall()
 		connection.commit()
 		print(type(result))
-		print(result)
+		print(len(result))
 		device_id = result[0]['device_id']
 		school_id = result[0]['school_id']
 		for i in range(0,(len(result)-1)):
