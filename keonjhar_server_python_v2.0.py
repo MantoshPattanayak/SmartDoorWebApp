@@ -193,10 +193,7 @@ def device_status(filtered_data,topic_data):
 			device_id=result4['device_id']
 			topic_alarm = str(device_id)+'/'+str(school_id)+'/'+str(school_name)+'/'+"Set_Alert"
 			print(topic_alarm)
-			topic_alarm = topic_data+"/Set_Alert"
 			client.publish(topic_alarm,"theft/alarm_on")
-			print(topic_alarm)
-			
 			with connection.cursor() as cursor:
 					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
 					cursor.execute(sql11,("Forced Entry",int(school_id),int(device_id),"Door Break",str(current_time),str(current_date),"0"))
