@@ -48,8 +48,9 @@ while True:
 		device_id = result[0]['device_id']
 		school_id = result[0]['school_id']
 		for i in range(0,(len(result)-1)):
+			print(i)
+			print(result[i]['device_heart_beat_time'])
 			school_time = result[i]['device_heart_beat_time']
-			print(school_time)
 			print(school_time)
 			t1 = datetime.strptime(school_time,"%H:%M:%S")
 			t2 = datetime.strptime(current_time, "%H:%M:%S")
