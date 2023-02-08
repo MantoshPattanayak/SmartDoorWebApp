@@ -73,5 +73,4 @@ while True:
 					result = cursor.fetchall()
 					connection.commit()
 				print("Online")
-			i+=1
 		
