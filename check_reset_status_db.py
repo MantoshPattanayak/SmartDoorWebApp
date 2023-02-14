@@ -42,31 +42,34 @@ while True:
 			logger.info("Data Found, intiating reset request")
 			print("Data Found, intiating reset request")
 			#print(result)
-			device_id = result[0]["device_id"]
-			school_id = result[0]["school_id"]
-			school_name = result[0]["school_name"]
+			reset_device_id = result[0]["device_id"]
+			reset_school_id = result[0]["school_id"]
+			reset_school_name = result[0]["school_name"]
 			for i in range(0,len(result)):
 				print(result)
-				topic_topic = str(device_id)+"/"+str(school_id)+"/"+str(school_name)+"/"+"Reset_POST"
-				print(topic_topic)
+				topic_topic = str(reset_device_id)+"/"+str(reset_school_id)+"/"+str(reset_school_name)+"/"+"Reset_POST"
+				print("Sending Reset to {}".format(topic_topic))
+
 				client.publish(topic_topic,"reset_0")
+
 				with connection.cursor() as cursor:
-					sql33 = "select device_id from keonjhar_school_device where school_id=%s and device_type=%s"
-					cursor.execute(sql33,(school_id,"Alarm"))
+					sql33 = "select device_id,school_id from keonjhar_school_device where school_id=%s and device_type=%s"
+					cursor.execute(sql33,(reset_school_id,"Alarm"))
 					result4 = cursor.fetchone()
-					device_id = result4['device_id']
+					alarm_device_id = result4['device_id']
+					alarm_school_id = result4['school_id']
 					sql66 = "Select school_name from keonjhar_school where school_id=%s"
 					cursor.execute(sql66,(int(school_id)))
 					result78 = cursor.fetchone()
 					connection.commit()
-					school_name = result78['school_name']
-					topic2 = str(device_id)+"/"+str(school_id)+"/"+str(school_name)+ "/" + "Set_Alert"
-					print(topic2)
+					alarm_school_name = result78['school_name']
+					topic2 = str(alarm_device_id)+"/"+str(alarm_school_id)+"/"+str(alarm_school_name)+ "/" + "Set_Alert"
+					print("Sending Alarm data: {}",.format(topic2))
 					client.publish(topic2,"theft/alarm_off")
 					print("Reset Send")
 				with connection.cursor() as cursor:
 					sql = "update keonjhar_school_device set device_status = 0, device_reset_status =0 where device_id=%s and school_id = %s;"
-					cursor.execute(sql,(device_id,school_id))
+					cursor.execute(sql,(reset_device_id,reset_school_id))
 					result = cursor.fetchall()
 					connection.commit()
 					print("Device has been reset {}".format(device_id))
