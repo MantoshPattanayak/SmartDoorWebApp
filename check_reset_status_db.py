@@ -51,7 +51,7 @@ while True:
 				print(topic_topic)
 				client.publish(topic_topic,"reset_0")
 				with connection.cursor() as cursor:
-					sql33 = "select keonjhar_school_device.device_id, keonjhar_school.school_name from keonjhar_school_device join keonjhar_school on keonjhar_school.school_id = keonjhar_school_device.school_id where school_id=%s and device_type=%s"
+					sql33 = "select keonjhar_school_device.device_id, keonjhar_school.school_name from keonjhar_school_device join keonjhar_school on keonjhar_school.school_id = keonjhar_school_device.school_id where device_type=%s"
 					cursor.execute(sql33,(school_id,"Alarm"))
 					result4 = cursor.fetchone()
 					device_id = result4['device_id']
