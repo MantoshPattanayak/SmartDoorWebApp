@@ -64,7 +64,7 @@ while True:
 					connection.commit()
 					alarm_school_name = result78['school_name']
 					topic2 = str(alarm_device_id)+"/"+str(alarm_school_id)+"/"+str(alarm_school_name)+ "/" + "Set_Alert"
-					print("Sending Alarm data: {}",.format(topic2))
+					print("Sending Alarm data: {}".format(topic2))
 					client.publish(topic2,"theft/alarm_off")
 					print("Reset Send")
 				with connection.cursor() as cursor:
