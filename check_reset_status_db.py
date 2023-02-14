@@ -51,11 +51,15 @@ while True:
 				print(topic_topic)
 				client.publish(topic_topic,"reset_0")
 				with connection.cursor() as cursor:
-					sql33 = "select keonjhar_school_device.device_id, keonjhar_school.school_name from keonjhar_school_device join keonjhar_school on keonjhar_school.school_id = keonjhar_school_device.school_id where device_type=%s"
+					sql33 = "select device_id from keonjhar_school_device where school_id=%s and device_type=%s"
 					cursor.execute(sql33,(school_id,"Alarm"))
 					result4 = cursor.fetchone()
 					device_id = result4['device_id']
-					school_name = result4['school_name']
+					sql66 = "Select school_name from keonjhar_school where school_id=%s"
+					cursor.execute(sql66,(int(school_id)))
+					result78 = cursor.fetchone()
+					connection.commit()
+					school_name = result78['school_name']
 					topic2 = str(device_id)+"/"+str(school_id)+"/"+str(school_name)+ "/" + "Set_Alert"
 					print(topic2)
 					client.publish(topic2,"theft/alarm_off")
