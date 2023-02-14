@@ -72,7 +72,7 @@ while True:
 					cursor.execute(sql,(reset_device_id,reset_school_id))
 					result = cursor.fetchall()
 					connection.commit()
-					print("Device has been reset {}".format(device_id))
+					print("Device has been reset {}".format(reset_device_id))
 	#client.reconnect()
 		# with connection.cursor() as cursor:
 		# 	sql = "select school_id from keonjhar_school_device where device_value>=50 group by school_id having count(device_value)>=2;"
