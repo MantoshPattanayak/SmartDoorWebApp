@@ -52,7 +52,7 @@ while True:
 				client.publish(topic_topic,"reset_0")
 				with connection.cursor() as cursor:
 					sql33 = "select device_id,school_name from keonjhar_school_device where school_id=%s and device_type=%s"
-					cursor.execute(sql,school_id,"Alarm")
+					cursor.execute(sql,(school_id,"Alarm"))
 					result4 = cursor.fetchone()
 					device_id = result4['device_id']
 					school_name = result4['school_name']
