@@ -59,7 +59,7 @@ while True:
 					alarm_device_id = result4['device_id']
 					alarm_school_id = result4['school_id']
 					sql66 = "Select school_name from keonjhar_school where school_id=%s"
-					cursor.execute(sql66,(int(school_id)))
+					cursor.execute(sql66,(int(alarm_school_id)))
 					result78 = cursor.fetchone()
 					connection.commit()
 					alarm_school_name = result78['school_name']
