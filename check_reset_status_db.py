@@ -41,7 +41,7 @@ while True:
 		else:
 			logger.info("Data Found, intiating reset request")
 			print("Data Found, intiating reset request")
-			print(result)
+			#print(result)
 			device_id = result[0]["device_id"]
 			school_id = result[0]["school_id"]
 			school_name = result[0]["school_name"]
