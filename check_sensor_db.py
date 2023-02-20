@@ -11,11 +11,6 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     #print(msg.topic+" "+str(msg.payload))
-    client = mqtt.Client()
-    client.on_connect = on_connect
-    client.on_message = on_message
-    client.connect("20.205.208.135", 1883, 60)
-
 
 global data
 connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
@@ -26,5 +21,9 @@ with connection.cursor() as cursor:
 	result = cursor.fetchall()
 	connection.commit()
 	print(result)
-	
+
+client = mqtt.Client()
+client.on_connect = on_connect
+client.on_message = on_message
+client.connect("20.205.208.135", 1883, 60)	
 client.loop_forever()
