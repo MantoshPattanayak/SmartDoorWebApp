@@ -2,26 +2,39 @@ import time
 import paho.mqtt.client as mqtt
 import pymysql.cursors
 from datetime import datetime
+from datetime import date
 import ping3
 import logging
-global data
+import pytz
+
+logging.basicConfig(filename="/home/azureiotuser/server.log",format='%(asctime)s %(message)s',filemode='a')
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
+
 def on_connect(client, userdata, flags, rc):
 	print("Connected with result code "+str(rc))
-	#client.subscribe("$SYS/#")
 
 def on_message(client, userdata, msg):
-	#print(msg.topic+" "+str(msg.payload))
+	print("Data arrived")
+	print('\n')
 
-connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
-with connection.cursor() as cursor:
-	sql = "select school_id from keonjhar_school_device where device_temp>=50 and device_mq2>=5000 and device_hum<=25 group by school_id having count(device_temp)>=2;"
-	cursor.execute(sql)
-	result = cursor.fetchall()
-	connection.commit()
-	print(result)
+while True:
+	try:
+		#connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
+		client = mqtt.Client()
+		client.on_connect = on_connect
+		client.on_message = on_message
+		client.connect("20.205.208.135", 1883, 60)		
+	except Exception as e:
+		raise e
+	else:
+		print("Restarting")
+	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
+	with connection.cursor() as cursor:
+		sql = "select school_id from keonjhar_school_device where device_temp>=50 and device_mq2>=5000 and device_hum<=25 group by school_id having count(device_temp)>=2"
+		cursor.execute(sql)
+		result = cursor.fetchall()
+		print(result)
 
-client = mqtt.Client()
-client.on_connect = on_connect
-client.on_message = on_message
-client.connect("20.205.208.135", 1883, 60)
-client.loop_forever()
+	client.loop_forever()
