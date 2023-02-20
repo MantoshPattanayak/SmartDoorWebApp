@@ -32,19 +32,24 @@ while True:
 	else:
 		connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 		with connection.cursor() as cursor:
-			sql = "select school_id from keonjhar_school_device where device_temp>=50 and device_mq2>=5000 and device_hum<=25 group by school_id having count(device_temp)>=2"
+			sql = "select school_id,device_id from keonjhar_school_device where device_temp>=50 and device_mq2>=5000 and device_hum<=25 group by school_id having count(device_temp)>=2"
 			cursor.execute(sql)
 			result = cursor.fetchall()
 			if result == ():
 				print("Sensors Stable")
 			else:
 				print("Sensor Unstable")
+				print("High Alert")
 				for i in result:
 					print("Initiating Alarm for School {}".format(i["school_id"]))
 					school_id = i["school_id"]
+					device_id = i["device_id"]
 					with connection.cursor() as cursor:
-						sql = "Select school_name from keonjhar_school where school_id=%s"
-						cursor.execute(sql,(int(school_id)))
-						result = cursor.fetchone()
-						print(result)
+						sql654 = "Select school_name from keonjhar_school where school_id=%s"
+						cursor.execute(sql654,(int(school_id)))
+						result44 = cursor.fetchone()
+						school_name = result44["school_name"]
+						send_alert_topic = str(device_id)+"/"+str(school_id)+"/"+str(school_name)+"/"+"Set_Alert"
+						client.publish(send_alert_topic,"theft/alarm_on")
+						print("Alert Sent")
 # client.loop_forever()
