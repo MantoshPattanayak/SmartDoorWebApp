@@ -21,11 +21,11 @@ def on_message(client, userdata, msg):
 
 while True:
 	try:
-		print("trying")
+		#print("trying")
 		client = mqtt.Client()
 		client.on_connect = on_connect
 		client.on_message = on_message
-		client.connect("20.205.208.135", 1883, 60)		
+		client.connect("20.205.208.135", 1883, 60)
 	except Exception as e:
 		print("Issue Found")
 		raise e
@@ -36,4 +36,8 @@ while True:
 			cursor.execute(sql)
 			result = cursor.fetchall()
 			print(result)
+			if result == ():
+				print("Sensors Stable")
+			else:
+				print("Sensor Unstable")
 # client.loop_forever()
