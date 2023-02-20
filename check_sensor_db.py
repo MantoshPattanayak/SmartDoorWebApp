@@ -39,6 +39,7 @@ while True:
 				print("Sensors Stable")
 			else:
 				print("Sensor Unstable")
-				for i in result:
+				for i,j in result:
 					print(i)
+
 # client.loop_forever()
