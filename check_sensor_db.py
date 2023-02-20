@@ -10,7 +10,7 @@ def on_connect(client, userdata, flags, rc):
 	#client.subscribe("$SYS/#")
 
 def on_message(client, userdata, msg):
-#print(msg.topic+" "+str(msg.payload))
+	#print(msg.topic+" "+str(msg.payload))
 
 connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 with connection.cursor() as cursor:
