@@ -40,6 +40,11 @@ while True:
 			else:
 				print("Sensor Unstable")
 				for i in result:
-					print(i)
-					print(type(i))	
+					print("Initiating Alarm for School {}".format(i["school_id"]))
+					school_id = i["school_id"]
+					with connection.cursor() as cursor:
+						sql = "Select school_name from keonjhar_school where school_id=%s"
+						cursor.execute(sql,(int(school_id)))
+						result = cursor.fetchone()
+						print(result)
 # client.loop_forever()
