@@ -32,9 +32,8 @@ while True:
 		print("Restarting")
 	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 	with connection.cursor() as cursor:
-		sql = "select school_id from keonjhar_school_device where device_temp>=50 and device_mq2>=5000 and device_hum<=25 group by school_id having count(device_temp)>=2"
+		sql = "select school_id,school_name,device_id from keonjhar_school_device where device_temp>=50 and device_mq2>=5000 and device_hum<=25 group by school_id having count(device_temp)>=2"
 		cursor.execute(sql)
 		result = cursor.fetchall()
 		print(result)
-
-	client.loop_forever()
+# client.loop_forever()
