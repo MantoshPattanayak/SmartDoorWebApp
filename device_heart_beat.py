@@ -44,7 +44,7 @@ while True:
 		result = cursor.fetchall()
 		connection.commit()
 		device_id = result[0]['device_id']
-		school_id = result[0]['school_id']
+		school_id = result[1]['school_id']
 		for i in result:
 			print(i)
 			school_time = i['device_heart_beat_time']
