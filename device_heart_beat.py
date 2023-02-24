@@ -71,5 +71,5 @@ while True:
 					cursor.execute(sql11,("device_online",int(school_id),int(device_id),"device Online",str(current_time),str(current_date),"0"))
 					result = cursor.fetchall()
 					connection.commit()
-				print("Online")
+					print("Online")
 		
