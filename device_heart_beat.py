@@ -49,8 +49,10 @@ while True:
 			print(i)
 			school_time = i['device_heart_beat_time']
 			t1 = datetime.strptime(school_time,"%H:%M:%S")
+			print(t1)
 			t2 = datetime.strptime(current_time, "%H:%M:%S")
 			delta = t2-t1
+			print(delta)
 			print("Time diff {}".format(delta.total_seconds()))
 			if delta.total_seconds() > 30.0:
 				with connection.cursor() as cursor:
