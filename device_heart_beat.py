@@ -37,13 +37,14 @@ while True:
 	client.on_message = on_message
 	client.connect("20.205.208.135", 1883, 60)
 	time.sleep(4)
-	with connection.cursor() as cursor:
+	with connection.cursor() as cursorxxx:
 		sql = "Select device_id,device_heart_beat_time,school_id from keonjhar_school_device where device_heart_beat_time is NOT NULL"
-		cursor.execute(sql)
-		result = cursor.fetchall()
+		cursorxxx.execute(sql)
+		result = cursorxxx.fetchall()
 		connection.commit()
 		device_id = result[0]['device_id']
 		school_id = result[1]['school_id']
+		print(result)
 		for i in result:
 			print(i)
 			school_time = i['device_heart_beat_time']
