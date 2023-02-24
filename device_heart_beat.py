@@ -47,6 +47,8 @@ while True:
 			device_id = result[0]['device_id']
 			school_id = result[0]['school_id']
 			print(i)
+			print(device_id)
+			print(school_id)
 			school_time = i['device_heart_beat_time']
 			t1 = datetime.strptime(school_time,"%H:%M:%S")
 			print(t1)
@@ -56,6 +58,8 @@ while True:
 			print("Time diff {}".format(delta.total_seconds()))
 			if abs(delta.total_seconds()) > 30.0:
 				with connection.cursor() as cursor:
+					print(device_id)
+					print(school_id)
 					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
 					cursor.execute(sql11,("device_offline",int(school_id),int(device_id),"device Offline",str(current_time),str(current_date),"0"))
 					connection.commit()
@@ -65,6 +69,8 @@ while True:
 					print("Offline")
 			else:
 				with connection.cursor() as cursor:
+					print(device_id)
+					print(school_id)
 					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
 					cursor.execute(sql11,("device_online",int(school_id),int(device_id),"device Online",str(current_time),str(current_date),"0"))
 					connection.commit()
