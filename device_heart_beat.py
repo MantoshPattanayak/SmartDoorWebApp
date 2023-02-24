@@ -44,8 +44,8 @@ while True:
 		connection.commit()
 		print(result)
 		for i in result:
-			device_id = result[0]['device_id']
-			school_id = result[0]['school_id']
+			device_id = i['device_id']
+			school_id = i['school_id']
 			print(i)
 			print(device_id)
 			print(school_id)
