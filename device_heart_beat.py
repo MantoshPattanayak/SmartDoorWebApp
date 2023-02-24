@@ -42,10 +42,10 @@ while True:
 		cursorxxx.execute(sql)
 		result = cursorxxx.fetchall()
 		connection.commit()
-		device_id = result[0]['device_id']
-		school_id = result[1]['school_id']
 		print(result)
 		for i in result:
+			device_id = result[0]['device_id']
+			school_id = result[0]['school_id']
 			print(i)
 			school_time = i['device_heart_beat_time']
 			t1 = datetime.strptime(school_time,"%H:%M:%S")
