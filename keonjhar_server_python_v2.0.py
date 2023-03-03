@@ -301,7 +301,7 @@ def sensor_validation(filtered_data,topic_data):
 	print(temp)
 	print(hum)
 	print(mq2)
-	if temp == None:
+	if temp == None and hum==None:
 		print("Sensor Not Working or Sending NAN Data")
 		pass
 	else:
