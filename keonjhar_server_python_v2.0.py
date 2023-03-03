@@ -301,16 +301,20 @@ def sensor_validation(filtered_data,topic_data):
 	print(temp)
 	print(hum)
 	print(mq2)
-	device_id =  filtered_data[0]
-	school_id = filtered_data[1]
-	with connection.cursor() as cursor:
-		sql = "update keonjhar_school_device set device_id=%s,device_temp=%s,device_hum=%s,device_mq2=%s,school_id=%s where device_id=%s"
-		sql2 = "Insert into sensor_data_keonjhar(device_id,school_id,device_smoke_data,device_temperature,device_humidity,received_date,recevied_time) values(%s,%s,%s,%s,%s,%s,%s);"
-		cursor.execute(sql,(int(device_id),float(temp),float(hum),float(mq2),int(school_id),int(device_id)))
-		cursor.execute(sql2,(int(device_id),int(school_id),float(mq2),float(temp),float(hum),str(current_date),str(current_time)))
-		result = cursor.fetchall()
-		connection.commit()
-		print("Done sensor upload")
+	if temp == None:
+		print("Sensor Not Working or Sending NAN Data")
+		pass
+	else:
+		device_id =  filtered_data[0]
+		school_id = filtered_data[1]
+		with connection.cursor() as cursor:
+			sql = "update keonjhar_school_device set device_id=%s,device_temp=%s,device_hum=%s,device_mq2=%s,school_id=%s where device_id=%s"
+			sql2 = "Insert into sensor_data_keonjhar(device_id,school_id,device_smoke_data,device_temperature,device_humidity,received_date,recevied_time) values(%s,%s,%s,%s,%s,%s,%s);"
+			cursor.execute(sql,(int(device_id),float(temp),float(hum),float(mq2),int(school_id),int(device_id)))
+			cursor.execute(sql2,(int(device_id),int(school_id),float(mq2),float(temp),float(hum),str(current_date),str(current_time)))
+			result = cursor.fetchall()
+			connection.commit()
+			print("Done sensor upload")
 def on_message(client, userdata, msg):
 	print("Data arrived")
 	print('\n')
