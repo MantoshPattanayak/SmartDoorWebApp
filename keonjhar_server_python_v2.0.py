@@ -356,7 +356,7 @@ def on_message(client, userdata, msg):
 
 print("Keonjhar Server Starting")
 print("keonjhar_server_python_v2.0.py starting")
-time.sleep(1000)
+time.sleep(1)
 while True:
 	try:
 		connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
