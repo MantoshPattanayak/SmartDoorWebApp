@@ -23,6 +23,8 @@ def on_connect(client, userdata, flags, rc):
 	with connection.cursor() as cursor:
 		topic = []
 		sql = "Select keonjhar_school_device.device_id,keonjhar_school_device.School_id,keonjhar_school.school_name from keonjhar_school_device join keonjhar_school on keonjhar_school_device.school_id = keonjhar_school.school_id"
+		program_sql = "Insert into server_program(program_details,program_status,program_status_time,program_status_date)values(%s,%s,%s,%s)"
+		cursor.execute(program_sql,('main.py','connected',str(current_time),str(current_date)))
 		cursor.execute(sql)
 		result = cursor.fetchall()
 		connection.commit()
@@ -35,7 +37,6 @@ def on_connect(client, userdata, flags, rc):
 			client.subscribe(topic)
 			logger.info("Subscribed to all the topics")
 			client.publish("master_program_status","Connected")
-			connection11 = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 			print("Program Status uploaded")
 		except Exception as e:
 			raise e
