@@ -19,6 +19,7 @@ def on_connect(client, userdata, flags, rc):
 	current_date = today.strftime("%d/%m/%Y")
 	print("Connected with result code "+str(rc))
 	logger.info("Started Connection and Connected with MQTT")
+	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 	with connection.cursor() as cursor:
 		topic = []
 		sql = "Select keonjhar_school_device.device_id,keonjhar_school_device.School_id,keonjhar_school.school_name from keonjhar_school_device join keonjhar_school on keonjhar_school_device.school_id = keonjhar_school.school_id"
