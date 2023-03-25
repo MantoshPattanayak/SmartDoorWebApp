@@ -10,6 +10,8 @@ logging.basicConfig(filename="/home/azureiotuser/server.log",format='%(asctime)s
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
+
+
 def on_connect(client, userdata, flags, rc):
 	UTC = pytz.utc
 	IST = pytz.timezone('Asia/Kolkata')
@@ -352,6 +354,9 @@ def on_message(client, userdata, msg):
 		print("incorrect data arrived")
 		logger.warning("Incorrect Data has Arrived")
 
+print("Keonjhar Server Starting")
+print("keonjhar_server_python_v2.0.py starting")
+time.delay(1000)
 while True:
 	try:
 		connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
