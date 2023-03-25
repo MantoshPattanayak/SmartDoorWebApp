@@ -61,7 +61,7 @@ def door_validation(filtered_data,topic_data):
 	school_id = data[2]
 	device_id = filtered_data[0]
 	with connection.cursor() as cursor:
-		sql = "Select emp_id,user_password,school_id from user_data where emp_id=%s and user_password=%s and school_id=%s"
+		sql = "Select emp_id,device_password,school_id from user_data where emp_id=%s and user_password=%s and school_id=%s"
 		cursor.execute(sql,(emp_id,password,school_id))
 		result = cursor.fetchall()
 		connection.commit()
