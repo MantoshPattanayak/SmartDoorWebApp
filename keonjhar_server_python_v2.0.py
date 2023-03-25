@@ -39,6 +39,7 @@ def on_connect(client, userdata, flags, rc):
 			with connection.cursor() as cursor:
 				update_server_query="insert into server_program (program_details,program_status,program_status_time,program_status_date) values(%s,%s,%s,%s)"
 				cursor.execute(update_server_query,("keonjhar_server_python_v2.0","connected",str(current_time),str(current_date)))
+				print("Program Status uploaded")
 		except Exception as e:
 			raise e
 		else:
