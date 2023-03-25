@@ -27,6 +27,7 @@ def on_connect(client, userdata, flags, rc):
 				print(i)
 			client.subscribe(topic)
 			logger.info("Subscribed to all the topics")
+			client.publish("master_program_status","Connected")
 		except Exception as e:
 			raise e
 		else:
