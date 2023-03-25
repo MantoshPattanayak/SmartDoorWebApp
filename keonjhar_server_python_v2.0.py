@@ -37,7 +37,7 @@ def on_connect(client, userdata, flags, rc):
 			client.publish("master_program_status","Connected")
 			connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 			with connection.cursor() as cursor:
-				update_server_query="insert into server_program (program_details,program_status,program_status_time,program_status_date) values(%s,%s,%s,%s)"
+				update_server_query="insert into server_program(program_details,program_status,program_status_time,program_status_date) values(%s,%s,%s,%s)"
 				cursor.execute(update_server_query,("keonjhar_server_python_v2.0","connected",str(current_time),str(current_date)))
 				print("Program Status uploaded")
 		except Exception as e:
