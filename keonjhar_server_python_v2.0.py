@@ -290,7 +290,7 @@ def sensor_validation(filtered_data,topic_data):
 	today = date.today()
 	current_time = datetime.now(IST)
 	current_time =current_time.strftime('%H:%M:%S')
-	current_date = today.strftime("%d/%m/%Y")
+	current_date = today.strftime("%Y/%m/%d")
 	connection = pymysql.connect(host='souliot.mariadb.database.azure.com',user='okcliot@souliot',password='Siva@123',database='okcldb',cursorclass=pymysql.cursors.DictCursor)
 	topic_data = topic_data
 	data = filtered_data[3].split("@")
