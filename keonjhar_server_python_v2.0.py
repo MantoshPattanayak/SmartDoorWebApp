@@ -85,7 +85,7 @@ def door_validation(filtered_data,topic_data):
 			print(topic_data)
 			#insert into log#######################
 		else:
-			if int(emp_id) == int(result[0]["emp_id"]) and password== result[0]["user_password"]:
+			if int(emp_id) == int(result[0]["emp_id"]) and password== result[0]["device_password"]:
 				with connection.cursor() as cursor:
 					sql11 = "Insert into keonjhar_log (log_type,log_school_id,log_device_id,log_description,log_time,log_date,log_alert_status) values(%s,%s,%s,%s,%s,%s,%s);"
 					cursor.execute(sql11,("Door_Entry Granted",int(school_id),int(device_id),"Access Granted",str(current_time),str(current_date),"0"))
