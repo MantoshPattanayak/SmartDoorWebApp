@@ -2,7 +2,7 @@ let express = require("express");
 let app = express();
 let dotenv = require("dotenv");
 // let session=require("express-session");
-let cookieParser=require("cookie-parser");
+let cookieParser = require("cookie-parser");
 dotenv.config();
 const Chart = require('chart.js');
 const session = require('express-session');
@@ -23,9 +23,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 app.use(cookieParser());
-app.use(session({secret: "soul-ltd-key", resave: false, saveUninitialized: true}))
+app.use(session({ secret: "soul-ltd-key", resave: false, saveUninitialized: true }))
 app.use(nocache());
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Cache-Control", "no-cache, no-store, must-revalidate");
   res.header("Pragma", "no-cache");
   res.header("Expires", 0);
@@ -63,30 +63,31 @@ connection.getConnection((err, connection) => {
 
 //index page login
 app.get("/", function (req, res) {
-  if(req.session.user_name != null) {
+  if (req.session.user_name != null) {
     console.log(req.session.user_password)
     res.redirect("/registration")
   } else {
-  res.render("index", {
-    error: "", v: "", device_id: "", device_type: "", device_mq2: "",
-    device_temp: "", device_hum: "",
-    device_heartbeat_status: "", data: "", data1: "", data2: "", data3: "", data4: ""
-  });}
+    res.render("index", {
+      error: "", v: "", device_id: "", device_type: "", device_mq2: "",
+      device_temp: "", device_hum: "",
+      device_heartbeat_status: "", data: "", data1: "", data2: "", data3: "", data4: ""
+    });
+  }
 });
 
 app.get('/registration', function (req, res) {
-  res.render("index", {
-    error: "", v: "", device_id: "", device_type: "", device_mq2: "",
-    device_temp: "", device_hum: "",
-    device_heartbeat_status: "", data: "", data1: "", data2: "", data3: "", data4: ""
-  });
+  res.render("user");
+  //   error: "", v: "", device_id: "", device_type: "", device_mq2: "",
+  //   device_temp: "", device_hum: "",
+  //   device_heartbeat_status: "", data: "", data1: "", data2: "", data3: "", data4: ""
+  // });
 });
 
 // registration page
 app.post("/registration", function (req, res) {
   var username = req.body.name;
   var user_password = req.body.password;
- 
+
   // let scID;
   // var password=md5(user_password)   second comment out for md5
   console.log(username)
@@ -108,7 +109,7 @@ app.post("/registration", function (req, res) {
         // req.session.regenerate(() => {
         // req.session.loggedin = true;
         // req.session.username = username;
-        
+
         // console.log(y)
         // if(y.length==0){
         //   console.log(y)
@@ -126,9 +127,9 @@ app.post("/registration", function (req, res) {
             console.log(dev)
 
           })
-          req.session.username =x[0].username;
-                      req.session.user_password =x[0].user_password;
-                      req.session.privileges_user =x[0].privileges_user;
+          req.session.username = x[0].username;
+          req.session.user_password = x[0].user_password;
+          req.session.privileges_user = x[0].privileges_user;
           res.redirect("school/?scID=" + x[0].school_id);
 
 
@@ -138,7 +139,7 @@ app.post("/registration", function (req, res) {
 
         }
 
-      // })
+        // })
 
       }
       else if (x.length == 0) {
@@ -146,7 +147,7 @@ app.post("/registration", function (req, res) {
         return res.render("index", { error: "Invalid Username" });
       }
 
-    
+
     })
   })
 
@@ -225,16 +226,27 @@ app.post('/d2', (req, res) => {
 app.post('/d3', (req, res) => {
   const { sclName, sclAddress, sclType, sclNumber, Inf, gps } = req.body;
   console.log({ sclName, sclAddress, sclType, sclNumber, Inf, gps })
-  connection.query('INSERT INTO okcldb.keonjhar_school SET ?', { school_Name: sclName, school_address: sclAddress, school_type: sclType, school_contact: sclNumber, internet_facility: Inf, gps_cooridinate: gps }, (error, y) => {
-    if (error) {
-      console.log(error);
+  let pause='school_Name is already exist'
+  connection.query('select school_Name from okcldb.keonjhar_school where BINARY school_Name=?',[sclName],(err,sn)=>{
+    console.log(sn);
+   if(sn.length==0){
+  
+      connection.query('INSERT INTO okcldb.keonjhar_school SET ?', { school_Name: sclName, school_address: sclAddress, school_type: sclType, school_contact: sclNumber, internet_facility: Inf, gps_cooridinate: gps }, (error, y) => {
+        if (error) {
+          console.log(error);
+        }
+        else {
+          //  res.sendStatus(200)
+          res.render('ok');
+        }
+      })}
+      else if(sn[0].school_Name===sclName){
+      res.render('user',{pause,v})
     }
-    else {
-      //  res.sendStatus(200)
-      res.render('ok');
-    }
-  })
-})
+   
+ 
+})})
+
 
 
 
@@ -261,56 +273,59 @@ app.get('/school', (req, res) => {
         connection.query('select count(*) from okcldb.keonjhar_log where log_type="Door_Entry Granted" and log_school_id =?', [scID], (err, result2, fields) => {
           connection.query("select count(*) from okcldb.keonjhar_log where log_type ='Door_Entry Closed' and log_school_id =?", [scID], (err, result3, fields) => {
             connection.query("select count(*) from okcldb.keonjhar_log where log_type ='Door_Opened Inside' and log_school_id =?", [scID], (err, result4, fields) => {
-              connection.query("select count(*)  from keonjhar_log where log_type = 'Door_Entry Granted' and log_school_id=? and log_date=curdate() ", [scID], (err, result5, fields) => {
-                connection.query("select count(*) from keonjhar_log  where str_to_date(log_date, '%d/%m/%Y') >= curdate() - interval 7 day and str_to_date(log_date, '%d/%m/%Y') < curdate() and log_type = 'Door_Entry Granted' and log_school_id =?", [scID], (err, result6, fields) => {
-                  connection.query("select count(*) from keonjhar_log  where str_to_date(log_date, '%d/%m/%Y') >= curdate() - interval 30 day and str_to_date(log_date, '%d/%m/%Y') < curdate() and log_type = 'Door_Entry Granted' and log_school_id =?", [scID], (err, result7, fields) => {
-                    connection.query("select count(*) as o, case WHEN log_time IS NULL  THEN 0 ELSE log_time end as log_time from keonjhar_log where log_type = 'Door_Entry Granted' and log_school_id=?  ", [scID], (err, res8, fields) => {
-                      connection.query("select count(*) as close, case WHEN log_time IS NULL  THEN 0 ELSE log_time end as log_time from keonjhar_log where log_type = 'Door_Entry Closed' and log_school_id=?", [scID], (err, res9, fields) => {
+              connection.query("select count(*) from keonjhar_log kl where substring(log_date,1,2) = SUBSTRING(curdate(),9,2) and log_type ='Door_Entry Granted' and  log_school_id=? ", [scID], (err, result5, fields) => {
+                connection.query("select count(*) from keonjhar_log  where str_to_date(log_date,'%d/%m/%Y')>=curdate()and log_type ='Door_Entry Granted' and  log_school_id=?", [scID], (err, result6, fields) => {
+                  connection.query("select count( *) from keonjhar_log kl where substring(log_date,4,2) = SUBSTRING(curdate(),6,2) and log_type ='Door_Entry Granted' and  log_school_id=? ", [scID], (err, result7, fields) => {
+                    connection.query("SELECT count(log_time) as o ,case WHEN log_time IS NULL  THEN 0 ELSE log_time end as log_time from keonjhar_log where log_type='Door_Entry Granted' and log_school_id=? and substring(log_date,1,2) = SUBSTRING(curdate(),9,2) group by SUBSTRING(log_time,1,2)", [scID], (err, res8, fields) => {
+                      connection.query("SELECT count(log_time) as close ,case WHEN log_time IS NULL  THEN 0 ELSE log_time end as log_time from keonjhar_log where log_type='Door_Entry Closed' and log_school_id=? and substring(log_date,1,2) = SUBSTRING(curdate(),9,2) group by SUBSTRING(log_time,1,2)", [scID], (err, res9, fields) => {
                         connection.query("select school_name from keonjhar_school where school_id =?", [scID], (err, res10, fields) => {
-                        let on = []
-                        let ti = []
-                        let cl = []
-                        let tl = []
+                          connection.query("select connection_status from okcldb.keonjhar_school_device where device_type ='Door' and school_id =?",[scID],  (err, result11, fields) => {
+                          let on = []
+                          let ti = []
+                          let cl = []
+                          let tl = []
 
 
 
 
 
 
-                        for (var i = 0; i < res8.length; i++) {
-                          on.push(res8[i].o.toString());
-                          ti.push(res8[i].log_time.toString().substring(0, 2));
-                        }
-                        console.log(on, "  ", ti)
+                          for (var i = 0; i < res8.length; i++) {
+                            on.push(res8[i].o.toString());
+                            ti.push(res8[i].log_time.toString().substring(0, 2));
+                          }
+                          console.log(on, "  ", ti)
 
 
-                        for (var i = 0; i < res9.length; i++) {
-                          cl.push(res9[i].close.toString());
-                          tl.push(res9[i].log_time.toString().substring(0, 2));
-                        }
-                        console.log(cl, "  ", tl)
+                          for (var i = 0; i < res9.length; i++) {
+                            cl.push(res9[i].close.toString());
+                            tl.push(res9[i].log_time.toString().substring(0, 2));
+                          }
+                          console.log(cl, "  ", tl)
 
 
 
-                    res.render('dashboard', {
-                      on, ti, cl, tl, sch, device_id: device_id, device_type: device_type, device_mq2: devicemq2,
-                      device_temp: device_temp, device_hum: device_hum,
-                      device_heartbeat_status: device_heartbeat_status, data: result, data1: result1, data2: result2, data3: result3, data4: result4, data5: result5, data6: result6, data7: result7,data10:res10
-                    });
-                    console.log(result5, result6, result7,res10);
-                    res.end();
+                          res.render('dashboard', {
+                            on, ti, cl, tl, sch, device_id: device_id, device_type: device_type, device_mq2: devicemq2,
+                            device_temp: device_temp, device_hum: device_hum,
+                            device_heartbeat_status: device_heartbeat_status, data: result, data1: result1, data2: result2, data3: result3, data4: result4, data5: result5, data6: result6, data7: result7, data10: res10,data11:result11
+                          });
+                          console.log(result5, result6, result7, res10);
+
+                          res.end();
+                        })
+                      })
+                      })
+                    })
                   })
                 })
               })
             })
           })
+          // }
         })
       })
     })
-  // }
-})
-    })
-})
 })
 
 
@@ -842,7 +857,7 @@ app.get('/contact', (req, res) => {
 
 app.get('/logout', (req, res) => {
   console.log(req.session)
- 
+
   req.session.destroy((err) => {
     if (err) {
       console.log(err);
@@ -851,8 +866,12 @@ app.get('/logout', (req, res) => {
       res.redirect('/');
     }
   });
- 
+
 });
+
+app.get('/soon', (req, res) => {
+  res.render('soon');
+})
 
 
 //port connection

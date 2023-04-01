@@ -33,12 +33,12 @@
                                   
                                     <div class="input-box">
                                         <span class="details">Email</span>
-                                        <input type="email" placeholder="Enter your email" name="mail" required>
+                                        <input type="email" placeholder="Enter your email" name="mail" id="email"required>
                                     </div>
                                     <div class="input-box">
                                         <span class="details">User Contact</span>
-                                        <input type="tel" placeholder="Enter your 10 digit number"
-                                            pattern="[0-9]{3}[0-9]{2}[0-9]{3}[0-9]{2}" name="mobile" required>
+                                        <input type="tel" id="phone" name="phone"  placeholder="Enter your 10 digit number"
+                                            id="phone" name="mobile" required>
                                     </div>
                                     <div class="input-box">
                                         <span class="details">Emp Id</span>
@@ -267,6 +267,11 @@
                                 <div class="button">
                                     <input type="submit" value="Register">
                                 </div>
+                                <% if (typeof pause !== 'undefined') { %>
+                                    <script>
+                                      alert("<%= pause %>");
+                                    </script>
+                                  <% } %>
                             </form>
                         </div>
                     </div>
@@ -276,6 +281,44 @@
            
 
         </div>
+        <script>
+            const email = document.getElementById('email');
+
+const phone = document.getElementById('phone');
+
+const form = document.querySelector('form');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  if (!isValidEmail(email.value)) {
+    alert('Please enter a valid email address');
+    return;
+  }
+
+ 
+ 
+
+  if (!isValidPhoneNumber(phone.value)) {
+    alert('Phone number must be 10 digits and not start with 0');
+    return;
+  }
+
+  // If all fields are valid, submit the form
+  form.submit();
+});
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+
+
+
+function isValidPhoneNumber(phone) {
+  return /^[1-9]\d{9}$/.test(phone);
+}
+        </script>
 </body>
 
 </html>

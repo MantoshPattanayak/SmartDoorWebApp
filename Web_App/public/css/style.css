@@ -213,5 +213,6 @@ button:hover{
 	margin-top: -48%;
 	margin-right: 2%;
 	float: right;
+	position: sticky;
 
 }

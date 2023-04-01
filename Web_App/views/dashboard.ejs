@@ -36,12 +36,12 @@
           </div>
         </li>
         <!-- <i class="uil uil-times navCloseBtn" id="searchIcon"></i> -->
-        <li><a href="#"> Dashboard</a></li>
-        <li><a href="#"> Settings </a></li>
-        <li><a href="#"> Device Management </a> </li>
-        <li><a href="#"> Alert & Notification </a></li>
-        <li><a href="#"> Help</a></li>
-        <li><a href="http://localhost:7100/contact">Contact</a> </li>
+        <li><a href="http://localhost:7100/school/?scID=<%=sch%>"> Dashboard</a></li>
+        <li><a href="/soon"> Settings </a></li>
+        <li><a href="/soon"> Device Management </a> </li>
+        <li><a href="/soon"> Alert & Notification </a></li>
+        <!-- <li><a href="#"> Help</a></li> -->
+        <li><a href="/contact">Help</a> </li>
         <a href="/logout">
           <button onclick="a()" class="button-62" id="logout-btn" role="button">Log out &nbsp;
 
@@ -308,12 +308,48 @@
 
         <% } %>
     </div>
+    <div class="status">
+      <div class="status-1">
+        <h1> CURRENT DOOR STATUS</h1>
+         <br>
+         <br>
+         <button class="button-75" role="button"><span class="text">     <h1>
+          <% if(data11) { %>
+          <%= (data11[0].connection_status) %>
+          <%}%>
+                
+               </h1></span></button>
+ 
+      </div>
+      <div class="status-2">
+        
+        
+        <h1> CURRENT AVERAGE DEVICE STATUS</h1>
+        
+        <% var c=0 %>
+  <% for(let i=0;i<data.length;i++) { %>
+    <% if( data[i].device_heartbeat_status=='Offline') { %>
+     <% c=c+1 %> 
+      <% } %>
+   <% } %>
+   <% if(c>0) { %>
+    <br>
+    <br>
+     <h1>Disconnected</h1>
+     <h1>🔴</h1> 
+      <% } else{ %>  
+      
+    <h1>Connected</h1>
+    <h1 >🟢</h1>
+<% } %></div>
+    </div>
 
     <div class="device">
       <div class="device-1">
         <h2 class="h2">Door Opened</h2>
         <div class="btn">
           <h1>
+            
             <% if(data2) { %>
               <%=Object.values(data2[0]) %>
                 <% } %>
@@ -418,11 +454,11 @@
         <h1>Door Count(open)</h1>
         <%var on=on%>
           <%var ti=ti%>
-      </div>
-      <div class="gr1">
+          <div class="gr1">
         <canvas id="myChart2"></canvas>
+        <h3> Time</h3>
       </div>
-
+      </div>
       <div class="graph-1">
         <h1>Door Count(close)</h1>
         <%var cl=cl%>
@@ -430,10 +466,12 @@
             <div class="gr2">
               <canvas id="myChart3"></canvas>
             </div>
+            <h3> Time</h3>
                 
       </div>
+      </div>
 
-    </div>
+    
   </div>
 
   <script>

@@ -7,12 +7,27 @@
 	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet" />
 
 	<link rel="icon" type="image/x-icon" href="/img/okcl.jpeg">
+	<script type="text/javascript">
+		// Get the input field
+			var input = document.getElementsByClassName("input");
+
+			// Execute a function when the user presses a key on the keyboard
+			input.addEventListener("keypress", function (event) {
+				// If the user presses the "Enter" key on the keyboard
+				if (event.key === "Enter") {
+					// Cancel the default action, if needed
+					event.preventDefault();
+					// Trigger the button element with a click
+					document.getElementById("btn").click();
+				}
+			});
+	</script>
 
 	
 	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<script type="text/javascript" src="js/script.js"></script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function createForgotPasswordPage(event) {
 			window.open("password.html");
 		}
@@ -23,7 +38,7 @@
 
 			document.getElementById("form").submit();
 		}
-	</script>
+	</script> -->
 </head>
 
 <body>
