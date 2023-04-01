@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Login Form</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet" />
+
+	<link rel="icon" type="image/x-icon" href="/img/okcl.jpeg">
+
+	
+	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript">
+		function createForgotPasswordPage(event) {
+			window.open("password.html");
+		}
+		function handleSubmit(event) {
+			event.preventDefault();
+			const name = document.getElementById("name").value;
+			const password = document.getElementById("password").value;
+
+			document.getElementById("form").submit();
+		}
+	</script>
+</head>
+
+<body>
+	<p id="current-date"></p>
+	<p id="current-time"></p>
+
+	<!-- <img class="wave" src="img/wave.png"> -->
+	<div class="container">
+		<img src="img/soul_logo.jpeg" alt="soul" width="80px" height="80px" />
+		<!-- <p id="demo"></p> -->
+		<div class="img">
+			<img src="https://img.freepik.com/premium-vector/cyber-security-background-green-color-open-space_99087-52.jpg?w=2000"
+				alt="" />
+		</div>
+		<div class="login-content">
+			<form action="/registration" onsubmit="handleSubmit(event)" method="post" id="form">
+				<img src="img/avatar.svg" />
+				<h3 class="title">LOGIN</h3>
+				<div class="input-div one">
+					<div class="i">
+						<i class="fas fa-user"></i>
+					</div>
+					<div class="div">
+						<input type="text" class="input" id="name" name="name" placeholder="Username" />
+					</div>
+				</div>
+				<div class="input-div pass">
+					<div class="i">
+						<i class="fas fa-lock"></i>
+					</div>
+					<div class="div">
+						<input type="password" class="input" id="password" name="password" placeholder="Password" />
+					</div>
+				</div>
+				<button onclick="createForgotPasswordPage(event)">
+					Forgot Password?
+				</button>
+				<input type="submit" class="btn" value="Login" />
+				<p id="error">
+					<%= error %>
+				</p>
+			</form>
+		</div>
+	</div>
+	<div class="okcl-logo">
+		
+		<img src="/img/okcl.jpeg" alt="okcl" height="80px" width="80px">
+
+	</div>
+</body>
+
+</html>

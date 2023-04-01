@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/user.css">
+    
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- <h1>REGISTRATION FORMS</h1> -->
+
+        <div class="tabs">
+            <div class="tabby-tab">
+                <input type="radio" id="tab-1" name="tabby-tabs" checked>
+                <label for="tab-1">User Registration</label>
+                <div class="tabby-content">
+                    <!-- 				<img src="http://i64.tinypic.com/20qrlc.png"/> -->
+                    <div class="container">
+                        <div class="title">Registration</div>
+                        <div class="content">
+                            <form action="/d" method="Post" name="form1">
+                                <div class="user-details">
+                                    <div class="input-box">
+                                        <span class="details">Full Name</span>
+                                        <input type="text" placeholder="Enter your name" name="fullname" required>
+                                    </div>
+                                  
+                                    <div class="input-box">
+                                        <span class="details">Email</span>
+                                        <input type="email" placeholder="Enter your email" name="mail" required>
+                                    </div>
+                                    <div class="input-box">
+                                        <span class="details">User Contact</span>
+                                        <input type="tel" placeholder="Enter your 10 digit number"
+                                            pattern="[0-9]{3}[0-9]{2}[0-9]{3}[0-9]{2}" name="mobile" required>
+                                    </div>
+                                    <div class="input-box">
+                                        <span class="details">Emp Id</span>
+                                        <input type="number" placeholder="Enter your Emp Id" name="eid" required>
+                                    </div>
+                                    <div class="input-box">
+
+                                        <!-- <input type="text" placeholder="Confirm your password" required> -->
+                                        <span class="details"> Privileges User</span>
+                                        <select name="pu" required>
+
+                                            <option>User</option>
+                                            <option>Admin</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-box">
+                                        <span class="details">School Id</span>
+                                        <select name="scid" required>
+                                          
+                                        <% for(let i=0;i<v.length;i++){ %>
+                                              <option>
+                                                <%=Object.values(v[i])%>
+                                                
+                                                </option>
+                                       <% } %>
+                                            
+                                            
+
+                                            
+                                        </select>
+                                        
+                                    </div>
+
+                                     <div class="input-box">
+                                        <span class="details">Username</span>
+                                        <input type="text" placeholder="Enter your username" name="name" required>
+                                    </div>
+
+                                    <div class="input-box">
+                                        <span class="details">Password</span>
+                                        <input type="password" placeholder="Enter 10 digit Password" id="password"
+                                            pattern="[0-9]{10}" name="password" required>
+
+                                    </div>
+                                  
+
+                                </div>
+
+                                <div class="button">
+                                    <input type="submit" value="Register">
+                                </div>
+                            </form>
+                        </div>
+                        <% if (typeof alertMessage !== 'undefined') { %>
+                            <script>
+                              alert("<%= alertMessage %>");
+                            </script>
+                          <% } %>
+                          <% if (typeof notification!== 'undefined') { %>
+                            <script>
+                              alert("<%= notification %>");
+                            </script>
+                          <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabby-tab">
+                <input type="radio" id="tab-2" name="tabby-tabs">
+                <label for="tab-2">Device Registration</label>
+                <div class="tabby-content">
+                    <!-- <img src="http://i63.tinypic.com/wtykg4.png"/> -->
+                    <div class="container">
+                        <div class="title">Registration</div>
+                        <div class="content">
+                            <form action="/d2" method="Post" name="form1">
+                                <div class="user-details">
+                                    <div class="input-box">
+                                        <span class="details">School Id</span>
+                                        <select name="sid" required>
+                                            <% for(let i=0;i<v.length;i++){ %>
+                                                <option>
+                                                  <%=Object.values(v[i])%>
+                                                  
+                                                  </option>
+                                         <% } %>
+                                            
+                                           
+
+                                            
+                                        </select>
+                                       
+                                    </div>
+                                   
+                                    <div class="input-box">
+                                        <span class="details">Device Type</span>
+                                        <select name="dt" required>
+
+                                            <option>Sensor</option>
+                                            <option>Door</option>
+                                            <option>Alarm</option>
+                                            
+                                        </select>
+                                    </div>
+                                    <div class="input-box">
+                                        <span class="details"> Software Patch Date</span>
+                                        <input type="Date" placeholder="Enter Software path Dtae" id="path"
+                                            name="pDate" required>
+
+                                    </div>
+                                    
+                                    <div class="input-box">
+                                        <span class="details">Installation Date</span>
+                                        <input type="date" placeholder="Enter Installation Date" name="idate" required>
+                                    </div>
+
+                                    <!-- <div class="input-box">
+                                        <span class="details">Shelf Life</span>
+                                        <select name="pu" required>
+
+                                            <option>5</option>
+                                            
+                                        </select>
+                                        
+                                    </div> -->
+                                    <div class="input-box" style='visibility:hidden'>
+                                        <span class="details">Device Reset Status</span>
+                                        <select name="rds" required>
+
+                                            <option>0</option>
+                                            
+                                            
+                                        </select>
+                                    </div>
+                                    <div class="input-box" style='visibility:hidden'>
+                                        <span class="details">Device Status</span>
+                                        <select name="ds" required>
+
+                                            <option>0</option>
+                                            
+                                        </select>
+                                    </div>
+                                   
+
+                                   
+                                    <!-- <div class="input-box">
+                                        <span class="details">Status Date</span>
+                                        <input type="date" placeholder="Enter status Date" id=" statusdate"
+                                            name="statusdat" required>
+
+                                    </div> -->
+                                    <!-- <div class="input-box">
+                                        <span class="details"> Device Mac</span>
+                                        <input type="text" placeholder="Enter Device mac id" id="Mac"
+                                            name="Macid" required>
+
+                                    </div> -->
+                                    
+                                    <!-- <div class="input-box">
+                                        <span class="details">Status Time</span>
+                                        <input type="time" placeholder="Enter Status Time" name="StatusTime" required>
+                                    </div> -->
+                                    <!-- <div class="input-box">
+                                        <span class="details"> Software Patch Date</span>
+                                        <input type="Date" placeholder="Enter Software path Dtae" id="path"
+                                            name="pathDate" required>
+
+                                    </div> -->
+
+                                </div>
+
+                                <div class="button">
+                                    <input type="submit" value="Register">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabby-tab">
+                <input type="radio" id="tab-3" name="tabby-tabs">
+                <label for="tab-3">School Registration</label>
+                <div class="tabby-content">
+                    <!-- <img src="http://i66.tinypic.com/wuhy7b.png"/> -->
+                    <div class="container">
+                        <div class="title">Registration</div>
+                        <div class="content">
+                            <form action="/d3" method="Post" name="form1">
+                                <div class="user-details">
+                                    <div class="input-box">
+                                        <span class="details">School Name</span>
+                                        <input type="text" placeholder="Enter School Name" name="sclName" required>
+                                    </div>
+                                    <div class="input-box">
+                                        <span class="details">School Address</span>
+                                        <input type="text" placeholder="Enter School Address" name="sclAddress" required>
+                                    </div>
+                                    <div class="input-box">
+                                        <span class="details">School Type</span>
+                                        <input type="text" placeholder="Enter School Type" name="sclType" required>
+                                    </div>
+                                    <div class="input-box">
+                                        <span class="details">School  Contact</span>
+                                        <input type="tel" placeholder="Enter 10 digit number "
+                                            name="sclNumber"   pattern="[0-9]{3}[0-9]{2}[0-9]{3}[0-9]{2}" required>
+                                    </div>
+                                    <div class="input-box">
+                                        <span class="details">Internet Facility</span>
+                                        <select name="Inf" required>
+
+                                            <option>Yes</option>
+                                            <option>No</option>
+
+                                            
+                                        </select>
+                                    </div>
+                                    <div class="input-box">
+                                        <span class="details">GPS Location</span>
+                                        <input type="text" placeholder="Enter GPS Location" name="gps" required>
+                                    </div>
+                                    
+
+                                </div>
+
+                                <div class="button">
+                                    <input type="submit" value="Register">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           
+
+        </div>
+</body>
+
+</html>
