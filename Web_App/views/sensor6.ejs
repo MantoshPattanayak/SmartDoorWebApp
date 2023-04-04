@@ -4,133 +4,87 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="refresh" content="10">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="/img/soul_logo.jpeg">
-  <meta http-equiv="refresh" content="10">
+
   <title>Document</title>
-  <link rel="stylesheet" type="text/css" href="css/sensor1.css"> </head>
-  
+  <link rel="stylesheet" type="text/css" href="css/sensor1.css">
+</head>
+
 
 <body>
   <div class="nav">
     <img
-      src="https://media.licdn.com/dms/image/C560BAQE7WgnBeLm3Bg/company-logo_200_200/0/1625720418766?e=2147483647&v=beta&t=KTUp1omXehd0PtjA2EDBLnVKgKIjIXW9JMvcwT67TFk"
-      width="60">
-   
+      src="/img/soul_logo.jpeg" width="60">
     <ul class="nav-links" type="none">
-
-      <li><a href="http://localhost:7100/school/?scID=<%=sch%>"> Dashboard</a></li>
+      <i class="uil uil-times navCloseBtn" id="searchIcon"></i>
+      <li><a href="/school/?scID=<%=sch%>"> Dashboard</a></li>
       <li><a href="#"> Admin Settings </a></li>
       <li><a href="#"> Device Management </a> </li>
       <li><a href="#"> Alert & Notification </a></li>
       <li><a href="#"> Help</a></li>
-      <li><a href="#">Contact</a> </li>
-
     </ul>
   </div>
   <% if(data ) { %>
     <div class="menu">
-      <h2> Sensor Name= <%= data[0].device_type %>
+      <h2> Sensor Name : <%= data[0].device_type %>
       </h2>
-      <h2> Sensor Id = <%= data[0].device_id %>
+      <h2> Sensor Id : <%= data[0].device_id %>
       </h2>
       <h2> Status :
         <span id="status">
-          <%= data[0].device_heartbeat_status %>
-            <button class="signal-button-1"></button>
+         <%= data[0].device_heartbeat_status=='Online' ? ' 🟢' : ' 🔴' %>
         </span>
       </h2>
-
-
-
     </div>
-
-
-    <div class="card-2">
-      <h2 class="top">Humidity</h2>
-
-      <div class="graph-3">
-        <canvas id="myChart3"></canvas>
+    <div class="main__container">
+      <div class="card-2">
+        <h2 class="top">Humidity</h2>
+        <div class="graph-3">
+          <canvas id="myChart3"></canvas>
+        </div>
+      </div>
+      <div class="card-2">
+        <h2 class="top">Temperature</h2>
+        <div class="graph-1">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+      <div class="card-4">
+        <h2 class="top">Smoke</h2>
+        <div class="graph-2">
+          <canvas id="myChart2"></canvas>
+        </div>
+      </div>
+      <div class="card-5">
+        <div class="btn">
+          <button class="button-71" role="button">Sensor Update</button>
+          <button class="button-71" role="button">Sensor Reset</button>
+        </div>
+        <div class="btn">
+          <button class="button-71" role="button">OTA &nbsp;&nbsp; Update</button>
+          <button class="button-71" role="button">OTA &nbsp; &nbsp; Reset</button>
+        </div>
       </div>
     </div>
-
-    </div>
-
-
-
-
-    <div class="card-2">
-      <h2 class="top">Temperature</h2>
-
-
-      <div class="graph-1">
-        <canvas id="myChart"></canvas>
-      </div>
-
-
-    </div>
-    <div class="card-4">
-      <h2 class="top">Smoke</h2>
-
-
-      <div class="graph-2">
-        <canvas id="myChart2"></canvas>
-      </div>
-    </div>
-
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-    <div class="card-5">
-      <div class="btn">
-        <button class="button-71" role="button">Sensor Update</button>
-        <button class="button-71" role="button">Sensor Reset</button>
-      </div>
-      <div class="btn">
-        <button class="button-71" role="button">OTA &nbsp;&nbsp; Update</button>
-        <button class="button-71" role="button">OTA &nbsp; &nbsp; Reset</button>
-      </div>
-
-    </div>
-
-
-
-
-
     <div class="ip">
       <span class="ipl">
         <h2> IP Address</h2>
-
         <h2>
           <%= data[0].device_ip %>
         </h2>
-
       </span>
       <span class="ipl">
         <h2> Mac id </h2>
-
         <h2>
           <%= data[0].device_mac %>
         </h2>
-
       </span>
-
     </div>
-
     </div>
     </div>
     <% } %>
-
       <div>
         <%var c=j%>
           <%var d=k%>
@@ -144,27 +98,18 @@
           <%var th=m%>
       </div>
 
-
-
-
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>
-
-
         console.log('<%=c[0]%>');
 
-
-
-
-
         const ctx2 = document.getElementById('myChart2');
-
         let chart2 = new Chart(ctx2, {
           type: 'line',
           data: {
             labels: [],
             datasets: [{
               label: 'smoke',
+
               data: [],
               borderWidth: 1,
               borderColor: [
@@ -223,7 +168,8 @@
             datasets: [{
               label: 'Humidity',
               data: [],
-              borderWidth: 1
+              borderWidth: 1,
+
             }]
           },
 
@@ -278,6 +224,7 @@
                 'rgba(153, 102, 255, 1)',
                 'rgba(255, 159, 64, 1)'
               ],
+
             }]
           },
 

@@ -285,3 +285,21 @@ form .user-details .input-box{
     height: 42px;
     margin: 8px 0;
 }
+.back-button{
+  margin-top: -60%;
+}
+.label{
+  text-decoration: none;
+  color: #333;
+  font-size: 22px;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: rgb(201, 64, 251);
+  color: rgb(238, 241, 242);
+}
+.label:hover{
+  background-color: grey;
+  color: #fff;
+}
+
+
