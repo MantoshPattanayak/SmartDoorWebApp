@@ -661,5 +661,5 @@ app.get('/logout', (req, res) => {
 //port connection
 app.listen(port, (err) => {
   if (err) throw err;
-  console.log(`server listening on ${port}`);
+  console.log(`server listening on port ${port}`);
 });
